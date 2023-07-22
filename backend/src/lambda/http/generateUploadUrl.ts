@@ -1,17 +1,14 @@
 import 'source-map-support/register'
 
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
-import * as middy from 'middy'
-import { cors, httpErrorHandler } from 'middy/middlewares'
+import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 import { generateUploadUrl } from '../../helpers/attachmentUtils'
 import { createLogger } from '../../utils/logger'
 
-
 const logger = createLogger('GenerateUploadUrl');
-export const handler = middy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+
+export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Generating UploadUrl Event: ', event);
     const todoId = event.pathParameters.todoId;
-
     const URL = await generateUploadUrl(todoId);
 
     return {
@@ -24,12 +21,5 @@ export const handler = middy(async (event: APIGatewayProxyEvent): Promise<APIGat
             uploadUrl: URL,
         })
     };
-});
-handler
-  .use(httpErrorHandler())
-  .use(cors(
-    {
-      origin: "*",
-      credentials: true,
-    }
-  ))
+};
+
