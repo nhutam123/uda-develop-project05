@@ -21,9 +21,9 @@ provider:
     apiGateway: true
 
   environment:
-    UDACITY_PROJECT_NAME: tamln-serveless-${self:provider.stage}
-    TODOS_TABLE: tamln-serverless-${self:provider.stage}
-    S3_BUCKET_NAME: tamln-serverless-${self:provider.stage}
+    UDACITY_PROJECT_NAME: tamln2-serveless-${self:provider.stage}
+    TODOS_TABLE: tamln2-serverless-${self:provider.stage}
+    S3_BUCKET_NAME: tamln2-serverless-${self:provider.stage}
 
 
 custom:
