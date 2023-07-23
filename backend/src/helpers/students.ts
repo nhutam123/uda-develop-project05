@@ -15,22 +15,22 @@ export async function getAllStudent(userId: string): Promise<Student[]> {
 }
 
 export function createStudent(
-  createTodoRequest: CreateStudentRequest,
+  createStudentRequest: CreateStudentRequest,
   userId: string
 ): Promise<Student> {
   logger.info(`Creating new todo for user: ${userId}`)
-  const todoId = uuidv4()
+  const studentId = uuidv4()
 
-  const newTodo: Student = {
+  const newStudent: Student = {
     userId: userId,
-    studentId: todoId,
+    studentId: studentId,
     imageUrl: '',
     createdAt: new Date().getTime().toString(),
     isGraduated: false,
-    ...createTodoRequest
+    ...createStudentRequest
   }
 
-  return studentAccess.createStudent(newTodo)
+  return studentAccess.createStudent(newStudent)
 }
 
 export function updateStudent(
@@ -47,13 +47,13 @@ export async function deleteStudent(
   studentId: string,
   userId: string
 ): Promise<string> {
-  logger.info(`Deleting todo: ${studentId} of user: ${userId}`)
+  logger.info(`Deleting Student: ${studentId} of user: ${userId}`)
   const item = await studentAccess.getStudentByKeySchema(studentId, userId)
 
-  logger.info(`Checking auth of todo: ${studentId} for: user ${userId}`)
-  if (!item) throw new Error(`Todo item of ${studentId} is not exist !`)
+  logger.info(`Checking auth of Student: ${studentId} for: user ${userId}`)
+  if (!item) throw new Error(`Student item of ${studentId} is not exist !`)
   logger.info(
-    `Check auth of todo: ${studentId} for: user ${userId} : SUCCESS !`
+    `Check auth of Student: ${studentId} for: user ${userId} : SUCCESS !`
   )
 
   return studentAccess.deleteStudent(studentId, userId)
