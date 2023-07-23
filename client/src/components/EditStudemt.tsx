@@ -2,11 +2,12 @@ import * as React from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import Auth from '../auth/Auth'
 import { getUploadUrl, uploadFile } from '../api/students-api'
+import { History } from 'history'
 
 enum UploadState {
   NoUpload,
   FetchingPresignedUrl,
-  UploadingFile,
+  UploadingFile
 }
 
 interface EditStudentProps {
@@ -16,6 +17,7 @@ interface EditStudentProps {
     }
   }
   auth: Auth
+  history: History
 }
 
 interface EditStudentState {
@@ -51,11 +53,15 @@ export class EditStudent extends React.PureComponent<
       }
 
       this.setUploadState(UploadState.FetchingPresignedUrl)
-      const uploadUrl = await getUploadUrl(this.props.auth.getIdToken(), this.props.match.params.studentId)
+      const uploadUrl = await getUploadUrl(
+        this.props.auth.getIdToken(),
+        this.props.match.params.studentId
+      )
 
       this.setUploadState(UploadState.UploadingFile)
       await uploadFile(uploadUrl, this.state.file)
-      alert('File was uploaded!')
+
+      this.props.history.push('/')
     } catch (e) {
       alert('Could not upload a file: ' + (e as Error).message)
     } finally {
@@ -92,11 +98,14 @@ export class EditStudent extends React.PureComponent<
   }
 
   renderButton() {
-
     return (
       <div>
-        {this.state.uploadState === UploadState.FetchingPresignedUrl && <p>Uploading image metadata</p>}
-        {this.state.uploadState === UploadState.UploadingFile && <p>Uploading file</p>}
+        {this.state.uploadState === UploadState.FetchingPresignedUrl && (
+          <p>Uploading image metadata</p>
+        )}
+        {this.state.uploadState === UploadState.UploadingFile && (
+          <p>Uploading file</p>
+        )}
         <Button
           loading={this.state.uploadState !== UploadState.NoUpload}
           type="submit"

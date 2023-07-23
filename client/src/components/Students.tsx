@@ -1,5 +1,6 @@
 import dateFormat from 'dateformat'
 import { History } from 'history'
+import update from 'immutability-helper'
 import * as React from 'react'
 import {
   Button,
@@ -10,10 +11,16 @@ import {
   Input,
   Image,
   Loader,
-  Table
+  Table,
+  Checkbox
 } from 'semantic-ui-react'
 
-import { createStudent, deleteStudent, getStudents } from '../api/students-api'
+import {
+  createStudent,
+  deleteStudent,
+  getStudents,
+  patchStudent
+} from '../api/students-api'
 import Auth from '../auth/Auth'
 import { Student } from '../types/Student'
 
@@ -69,6 +76,24 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
       })
     } catch {
       alert('Student deletion failed')
+    }
+  }
+
+  onStudentCheck = async (pos: number) => {
+    try {
+      const student = this.state.students[pos]
+      await patchStudent(this.props.auth.getIdToken(), student.studentId, {
+        name: student.name,
+        dueDate: student.dueDate,
+        isGraduated: !student.isGraduated
+      })
+      this.setState({
+        students: update(this.state.students, {
+          [pos]: { isGraduated: { $set: !student.isGraduated } }
+        })
+      })
+    } catch {
+      alert('Student update graduation failed')
     }
   }
 
@@ -143,6 +168,7 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>No</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Date</Table.HeaderCell>
             <Table.HeaderCell>Graduate</Table.HeaderCell>
@@ -157,9 +183,17 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
             return (
               <Table.Row>
                 <Table.Cell>{pos}</Table.Cell>
+                <Table.Cell>
+                  <Checkbox
+                    onChange={() => this.onStudentCheck(pos)}
+                    checked={student.isGraduated}
+                  />
+                </Table.Cell>
                 <Table.Cell>{student.name}</Table.Cell>
                 <Table.Cell>{student.dueDate}</Table.Cell>
-                <Table.Cell>{student.isGraduated && 'x'}</Table.Cell>
+                <Table.Cell>
+                  {student.isGraduated && <Icon name="check" color="red" />}
+                </Table.Cell>
                 <Table.Cell>
                   {student.imageUrl && (
                     <Image

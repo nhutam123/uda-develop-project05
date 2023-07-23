@@ -67,11 +67,17 @@ export class StudentAccess {
         studentId: studentId
       },
       UpdateExpression:
-        'set name = :studentName, dueDate = :StudentDate, isGraduated = :isGraduated',
+        'set #studentName = :studentName, #studentDate = :StudentDate, #status = :isGraduatedStudent',
+      ExpressionAttributeNames: {
+        '#studentName': 'name',
+        '#studentDate': 'dueDate',
+        '#status': 'isGraduated'
+      },
+
       ExpressionAttributeValues: {
         ':studentName': studentUpdate.name,
         ':StudentDate': studentUpdate.dueDate,
-        ':isGraduated': studentUpdate.isGraduated
+        ':isGraduatedStudent': studentUpdate.isGraduated
       },
       ReturnValues: 'UPDATED_NEW'
     }

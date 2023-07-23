@@ -2,6 +2,7 @@ import { apiEndpoint } from '../config'
 import { Student } from '../types/Student'
 import { CreateStudentRequest } from '../types/CreateStudentRequest'
 import Axios from 'axios'
+import { UpdateStudentRequest } from '../types/UpdateTodoRequest'
 
 export async function getStudents(idToken: string): Promise<Student[]> {
   console.log('Fetching students')
@@ -43,6 +44,23 @@ export async function deleteStudent(
       Authorization: `Bearer ${idToken}`
     }
   })
+}
+
+export async function patchStudent(
+  idToken: string,
+  studentId: string,
+  updatedStudent: UpdateStudentRequest
+): Promise<void> {
+  await Axios.patch(
+    `${apiEndpoint}/students/${studentId}`,
+    JSON.stringify(updatedStudent),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${idToken}`
+      }
+    }
+  )
 }
 
 export async function getUploadUrl(
