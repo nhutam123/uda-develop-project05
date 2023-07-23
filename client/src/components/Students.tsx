@@ -1,10 +1,8 @@
 import dateFormat from 'dateformat'
 import { History } from 'history'
-import update from 'immutability-helper'
 import * as React from 'react'
 import {
   Button,
-  Checkbox,
   Divider,
   Grid,
   Header,
@@ -12,17 +10,10 @@ import {
   Input,
   Image,
   Loader,
-  Table,
-  Label,
-  Menu
+  Table
 } from 'semantic-ui-react'
 
-import {
-  createStudent,
-  deleteStudent,
-  getStudents,
-  patchStudent
-} from '../api/students-api'
+import { createStudent, deleteStudent, getStudents } from '../api/students-api'
 import Auth from '../auth/Auth'
 import { Student } from '../types/Student'
 
@@ -77,25 +68,7 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
         )
       })
     } catch {
-      alert('Todo deletion failed')
-    }
-  }
-
-  onStudentCheck = async (pos: number) => {
-    try {
-      const student = this.state.students[pos]
-      await patchStudent(this.props.auth.getIdToken(), student.studentId, {
-        name: student.name,
-        dueDate: student.dueDate,
-        isGraduated: !student.isGraduated
-      })
-      this.setState({
-        students: update(this.state.students, {
-          [pos]: { isGraduated: { $set: !student.isGraduated } }
-        })
-      })
-    } catch {
-      alert('Student check failed')
+      alert('Student deletion failed')
     }
   }
 
@@ -152,10 +125,8 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
     if (this.state.loadingStudents) {
       return this.renderLoading()
     }
-
-    return this.renderTodosList()
+    return this.renderStudentList()
   }
-
   renderLoading() {
     return (
       <Grid.Row>
@@ -166,12 +137,12 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
     )
   }
 
-  renderTodosList() {
+  renderStudentList() {
     return (
       <Table celled>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell></Table.HeaderCell>
+            <Table.HeaderCell>No</Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Date</Table.HeaderCell>
             <Table.HeaderCell>Graduate</Table.HeaderCell>
@@ -185,18 +156,17 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
           {this.state.students.map((student, pos) => {
             return (
               <Table.Row>
-                <Table.Cell>
-                  <Checkbox
-                    onChange={() => this.onStudentCheck(pos)}
-                    checked={student.isGraduated}
-                  />
-                </Table.Cell>
+                <Table.Cell>{pos}</Table.Cell>
                 <Table.Cell>{student.name}</Table.Cell>
                 <Table.Cell>{student.dueDate}</Table.Cell>
                 <Table.Cell>{student.isGraduated && 'x'}</Table.Cell>
                 <Table.Cell>
                   {student.imageUrl && (
-                    <Image src={student.imageUrl} size="small" wrapped />
+                    <Image
+                      src={student.imageUrl}
+                      alt={student.imageUrl}
+                      size="small"
+                    />
                   )}
                 </Table.Cell>
                 <Table.Cell>
