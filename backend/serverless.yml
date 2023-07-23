@@ -1,4 +1,4 @@
-# TODO: Change the name of the org 
+# TODO: Change the name of the org
 org: tamln2
 app: serverless-student-management
 service: serverless-student-management
@@ -8,7 +8,6 @@ plugins:
   - serverless-iam-roles-per-function
   - serverless-reqvalidator-plugin
   - serverless-aws-documentation
-  
 
 provider:
   name: aws
@@ -25,12 +24,11 @@ provider:
     STUDENTS_TABLE: tamln2-serverless-${self:provider.stage}
     S3_BUCKET_NAME: tamln2-serverless-${self:provider.stage}
 
-
 custom:
   documentation:
     api:
       info:
-        version: '1.0.0'
+        version: "1.0.0"
         title: serverless-api
         description: serverless-api
     models:
@@ -84,10 +82,10 @@ functions:
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
-        Resource: 
-          - '*'
+        Resource:
+          - "*"
 
-# Create Student
+  # Create Student
   CreateStudent:
     handler: src/lambda/http/createStudent.handler
     events:
@@ -111,10 +109,10 @@ functions:
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
-        Resource: 
-          - '*'
+        Resource:
+          - "*"
 
-# Update student
+  # Update student
   UpdateStudent:
     handler: src/lambda/http/updateStudent.handler
     events:
@@ -138,10 +136,10 @@ functions:
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
-        Resource: 
-          - '*'
+        Resource:
+          - "*"
 
-# Delete Student
+  # Delete Student
   DeleteStudent:
     handler: src/lambda/http/deleteStudent.handler
     events:
@@ -161,8 +159,8 @@ functions:
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
-        Resource: 
-          - '*'
+        Resource:
+          - "*"
       - Effect: Allow
         Action:
           - s3:DeleteObject
@@ -188,9 +186,9 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.STUDENTS_TABLE}
       - Effect: Allow
         Action:
-          - xray:PutTraceSegments 
+          - xray:PutTraceSegments
         Resource:
-        - '*'
+          - "*"
 
 resources:
   Resources:
@@ -212,7 +210,7 @@ resources:
     onlyBody:
       Type: "AWS::ApiGateway::RequestValidator"
       Properties:
-        Name: 'only-body'
+        Name: "only-body"
         RestApiId:
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
@@ -223,11 +221,10 @@ resources:
         BucketName: ${self:provider.environment.S3_BUCKET_NAME}
         CorsConfiguration:
           CorsRules:
-            -
-              AllowedOrigins:
-                - '*'
+            - AllowedOrigins:
+                - "*"
               AllowedHeaders:
-                - '*'
+                - "*"
               AllowedMethods:
                 - GET
                 - PUT
@@ -236,15 +233,15 @@ resources:
                 - HEAD
               MaxAge: 3000
         PublicAccessBlockConfiguration:
-              BlockPublicAcls: false
-              BlockPublicPolicy: false
-              IgnorePublicAcls: false
-              RestrictPublicBuckets: false
-   
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+          IgnorePublicAcls: false
+          RestrictPublicBuckets: false
+
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
       Properties:
-        Name: 'request-body-validator'
+        Name: "request-body-validator"
         RestApiId:
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
@@ -272,7 +269,7 @@ resources:
           gatewayresponse.header.Access-Control-Allow-Methods: "'*'"
         ResponseType: DEFAULT_5XX
         RestApiId:
-          Ref: ApiGatewayRestApi 
+          Ref: ApiGatewayRestApi
 
     # For cross referencing the name of the bucket, use "!Ref AttachmentsBucket"
     BucketPolicy:
@@ -280,11 +277,11 @@ resources:
       Properties:
         PolicyDocument:
           Id: MyPolicy
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
             - Sid: PublicReadForGetBucketObjects
               Effect: Allow
-              Principal: '*'
-              Action: 's3:GetObject'
-              Resource: 'arn:aws:s3:::${self:provider.environment.S3_BUCKET_NAME}/*'
+              Principal: "*"
+              Action: "s3:GetObject"
+              Resource: "arn:aws:s3:::${self:provider.environment.S3_BUCKET_NAME}/*"
         Bucket: !Ref AttachmentsBucket

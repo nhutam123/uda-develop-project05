@@ -11,10 +11,18 @@ import {
   Icon,
   Input,
   Image,
-  Loader
+  Loader,
+  Table,
+  Label,
+  Menu
 } from 'semantic-ui-react'
 
-import { createStudent, deleteStudent, getStudents, patchStudent } from '../api/students-api'
+import {
+  createStudent,
+  deleteStudent,
+  getStudents,
+  patchStudent
+} from '../api/students-api'
 import Auth from '../auth/Auth'
 import { Student } from '../types/Student'
 
@@ -64,7 +72,9 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
     try {
       await deleteStudent(this.props.auth.getIdToken(), studentId)
       this.setState({
-        students: this.state.students.filter(student => student.studentId !== studentId)
+        students: this.state.students.filter(
+          (student) => student.studentId !== studentId
+        )
       })
     } catch {
       alert('Todo deletion failed')
@@ -85,7 +95,7 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
         })
       })
     } catch {
-      alert('Todo deletion failed')
+      alert('Student check failed')
     }
   }
 
@@ -97,7 +107,7 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
         loadingStudents: false
       })
     } catch (e) {
-      alert(`Failed to fetch todos: ${(e as Error).message}`)
+      alert(`Failed to fetch Students: ${(e as Error).message}`)
     }
   }
 
@@ -108,7 +118,7 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
 
         {this.renderCreateStudentInput()}
 
-        {this.renderTodos()}
+        {this.renderStudents()}
       </div>
     )
   }
@@ -122,7 +132,7 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
               color: 'teal',
               labelPosition: 'left',
               icon: 'add',
-              content: 'New task',
+              content: 'New Student',
               onClick: this.onStudentCreate
             }}
             fluid
@@ -138,7 +148,7 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
     )
   }
 
-  renderTodos() {
+  renderStudents() {
     if (this.state.loadingStudents) {
       return this.renderLoading()
     }
@@ -150,7 +160,7 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
     return (
       <Grid.Row>
         <Loader indeterminate active inline="centered">
-          Loading TODOs
+          Loading Student
         </Loader>
       </Grid.Row>
     )
@@ -158,50 +168,64 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
 
   renderTodosList() {
     return (
-      <Grid padded>
-        {this.state.students.map((student, pos) => {
-          return (
-            <Grid.Row key={student.studentId}>
-              <Grid.Column width={1} verticalAlign="middle">
-                <Checkbox
-                  onChange={() => this.onStudentCheck(pos)}
-                  checked={student.isGraduated}
-                />
-              </Grid.Column>
-              <Grid.Column width={10} verticalAlign="middle">
-                {student.name}
-              </Grid.Column>
-              <Grid.Column width={3} floated="right">
-                {student.dueDate}
-              </Grid.Column>
-              <Grid.Column width={1} floated="right">
-                <Button
-                  icon
-                  color="blue"
-                  onClick={() => this.onEditButtonClick(student.studentId)}
-                >
-                  <Icon name="pencil" />
-                </Button>
-              </Grid.Column>
-              <Grid.Column width={1} floated="right">
-                <Button
-                  icon
-                  color="red"
-                  onClick={() => this.onStudentDelete(student.studentId)}
-                >
-                  <Icon name="delete" />
-                </Button>
-              </Grid.Column>
-              {student.imageUrl && (
-                <Image src={student.imageUrl} size="small" wrapped />
-              )}
-              <Grid.Column width={16}>
-                <Divider />
-              </Grid.Column>
-            </Grid.Row>
-          )
-        })}
-      </Grid>
+      <Table celled>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell></Table.HeaderCell>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Date</Table.HeaderCell>
+            <Table.HeaderCell>Graduate</Table.HeaderCell>
+            <Table.HeaderCell>Image</Table.HeaderCell>
+            <Table.HeaderCell>Edit</Table.HeaderCell>
+            <Table.HeaderCell>Delete</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          {this.state.students.map((student, pos) => {
+            return (
+              <Table.Row>
+                <Table.Cell>
+                  <Checkbox
+                    onChange={() => this.onStudentCheck(pos)}
+                    checked={student.isGraduated}
+                  />
+                </Table.Cell>
+                <Table.Cell>{student.name}</Table.Cell>
+                <Table.Cell>{student.dueDate}</Table.Cell>
+                <Table.Cell>{student.isGraduated && 'x'}</Table.Cell>
+                <Table.Cell>
+                  {student.imageUrl && (
+                    <Image src={student.imageUrl} size="small" wrapped />
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {
+                    <Button
+                      icon
+                      color="blue"
+                      onClick={() => this.onEditButtonClick(student.studentId)}
+                    >
+                      <Icon name="pencil" />
+                    </Button>
+                  }
+                </Table.Cell>
+                <Table.Cell>
+                  {
+                    <Button
+                      icon
+                      color="red"
+                      onClick={() => this.onStudentDelete(student.studentId)}
+                    >
+                      <Icon name="delete" />
+                    </Button>
+                  }
+                </Table.Cell>
+              </Table.Row>
+            )
+          })}
+        </Table.Body>
+      </Table>
     )
   }
 

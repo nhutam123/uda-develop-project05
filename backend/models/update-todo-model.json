@@ -9,14 +9,14 @@
     "dueDate": {
       "type": "string"
     },
-    "done": {
+    "isGraduated": {
       "type": "boolean"
     }
   },
   "required": [
     "name",
     "dueDate",
-    "done"
+    "isGraduated"
   ],
   "additionalProperties": false
 }
