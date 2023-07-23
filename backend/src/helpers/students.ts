@@ -5,12 +5,12 @@ import { StudentUpdate } from '../models/StudentUpdate'
 import { StudentAccess } from './studentsAcess'
 import { createLogger } from '../utils/logger'
 
-const logger = createLogger('Log from Todos.ts')
+const logger = createLogger('Log from Students.ts')
 const uuidv4 = require('uuid/v4')
 const studentAccess = new StudentAccess()
 
 export async function getAllStudent(userId: string): Promise<Student[]> {
-  logger.info(`Getting all todos for user: ${userId}`)
+  logger.info(`Getting all Students for user: ${userId}`)
   return studentAccess.getAllStudent(userId)
 }
 
@@ -18,7 +18,7 @@ export function createStudent(
   createStudentRequest: CreateStudentRequest,
   userId: string
 ): Promise<Student> {
-  logger.info(`Creating new todo for user: ${userId}`)
+  logger.info(`Creating new Student for user: ${userId}`)
   const studentId = uuidv4()
 
   const newStudent: Student = {

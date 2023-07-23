@@ -5,7 +5,7 @@ import { Student } from '../models/Student'
 import { StudentUpdate } from '../models/StudentUpdate'
 import { createLogger } from '../utils/logger'
 
-const logger = createLogger('Log from TodoAccess.ts')
+const logger = createLogger('Log from StudentAccess.ts')
 const AWSXRay = require('aws-xray-sdk')
 const XAWS = AWSXRay.captureAWS(AWS)
 
@@ -19,7 +19,7 @@ export class StudentAccess {
 
   async getAllStudent(userId: string): Promise<Student[]> {
     logger.info(
-      `Processing: Getting all todos of ${userId} from ${this.studentTable}`
+      `Processing: Getting all Students of ${userId} from ${this.studentTable}`
     )
     const params = {
       TableName: this.studentTable,
@@ -34,7 +34,7 @@ export class StudentAccess {
     const result = await this.docClient.query(params).promise()
     const items = result.Items
     logger.info(
-      `Processing: Get ${items.length} todos of ${userId} from ${this.studentTable}`
+      `Processing: Get ${items.length} Students of ${userId} from ${this.studentTable}`
     )
 
     return items as Student[]
@@ -42,7 +42,7 @@ export class StudentAccess {
 
   async createStudent(student: Student): Promise<Student> {
     logger.info(
-      `Create new todo: Insert ${student.studentId} of user: ${student.userId} into table: ${this.studentTable}`
+      `Create new Student: Insert ${student.studentId} of user: ${student.userId} into table: ${this.studentTable}`
     )
     const params = {
       TableName: this.studentTable,
@@ -83,7 +83,7 @@ export class StudentAccess {
   }
 
   async deleteStudent(studentId: string, userId: string): Promise<string> {
-    logger.info('Delete todo: ', studentId)
+    logger.info('Delete Student: ', studentId)
     const params = {
       TableName: this.studentTable,
       Key: {
@@ -143,12 +143,12 @@ export class StudentAccess {
     studentId: string,
     userId: string
   ): Promise<Student> {
-    logger.info(`Getting todo ${studentId} from ${this.studentTable}`)
+    logger.info(`GettingStudent ${studentId} from ${this.studentTable}`)
     const params = {
       TableName: this.studentTable,
       Key: {
         userId: userId,
-        todoId: studentId
+        studentId: studentId
       }
     }
     const result = await this.docClient.get(params).promise()

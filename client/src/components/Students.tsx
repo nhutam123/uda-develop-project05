@@ -46,16 +46,16 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
   onStudentCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
     try {
       const dueDate = this.calculateDueDate()
-      const newTodo = await createStudent(this.props.auth.getIdToken(), {
+      const newStudent = await createStudent(this.props.auth.getIdToken(), {
         name: this.state.newStudentName,
         dueDate
       })
       this.setState({
-        students: [...this.state.students, newTodo],
+        students: [...this.state.students, newStudent],
         newStudentName: ''
       })
     } catch {
-      alert('Todo creation failed')
+      alert('Student creation failed')
     }
   }
 
