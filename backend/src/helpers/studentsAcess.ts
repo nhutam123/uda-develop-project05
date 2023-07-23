@@ -47,18 +47,25 @@ export class StudentAccess {
         return student as Student;
     }
 
-    async updateStudent(todoUpdate: StudentUpdate, studentId: string, userId: string): Promise<StudentUpdate> {
-        logger.info('Update todo: ', todoUpdate);
-        const attachmentUrl = `https://${this.s3BucketName}.s3.us-east-1.amazonaws.com/${studentId}`
+    async updateStudent(studentUpdate: StudentUpdate, studentId: string, userId: string): Promise<StudentUpdate> {
+        logger.info('Update student: ', studentUpdate);
+
         const params = {
             TableName: this.studentTable,
             Key: {
                 "userId": userId,
                 "studentId": studentId
             },
-            UpdateExpression: "set attachmentUrl = :attachmentUrl",
+            UpdateExpression: "set #studentName = :todoName, #date = :todoDate, #status = :status",
+            ExpressionAttributeNames: {
+                "#studentName": "name",
+                "#date": "dueDate",
+                "#status": "isGraduated"
+            },
             ExpressionAttributeValues: {
-                ":attachmentUrl": attachmentUrl,
+                ":todoName": studentUpdate.name,
+                ":todoDate": studentUpdate.dueDate,
+                ":status": studentUpdate.isGraduated
             },
             ReturnValues: "UPDATED_NEW"
         };
@@ -84,13 +91,23 @@ export class StudentAccess {
         return;
     }
 
-    async generateUploadUrl(studentId: string): Promise<string> {
+    async generateUploadUrl(studentId: string,userId: string ): Promise<string> {
         logger.info('Generate upload url of: ', studentId);
         const url = this.s3Client.getSignedUrl('putObject', {
             Bucket: this.s3BucketName,
             Key: studentId,
             Expires: 600,
         });
+        await this.docClient.update({
+            TableName: this.studentTable,
+            Key: { userId, studentId },
+            UpdateExpression: "set attachmentUrl=:URL",
+            ExpressionAttributeValues: {
+              ":URL": url.split("?")[0]
+          },
+          ReturnValues: "UPDATED_NEW"
+        })
+        .promise();
 
         return url as string;
     }

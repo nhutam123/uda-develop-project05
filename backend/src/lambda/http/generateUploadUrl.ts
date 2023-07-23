@@ -3,13 +3,15 @@ import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 import { generateUploadUrl } from '../../helpers/attachmentUtils'
 import { createLogger } from '../../utils/logger'
+import { getUserId } from '../utils';
 
 const logger = createLogger('GenerateUploadUrl');
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Generating UploadUrl Event: ', event);
+    const userId = getUserId(event)
     const studentId = event.pathParameters.studentId;
-    const URL = await generateUploadUrl(studentId);
+    const URL = await generateUploadUrl(studentId,userId);
 
     return {
         statusCode: 202,
