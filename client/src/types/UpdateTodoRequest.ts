@@ -1,5 +1,5 @@
-export interface UpdateTodoRequest {
+export type UpdateStudentRequest = {
   name: string
   dueDate: string
-  done: boolean
+  isGraduated: boolean
 }

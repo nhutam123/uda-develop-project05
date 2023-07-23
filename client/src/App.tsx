@@ -6,7 +6,7 @@ import Auth from './auth/Auth'
 import { EditTodo } from './components/EditStudemt'
 import { LogIn } from './components/LogIn'
 import { NotFound } from './components/NotFound'
-import { Todos } from './components/Todos'
+import { Todos } from './components/Students'
 
 export interface AppProps {}
 
