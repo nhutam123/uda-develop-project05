@@ -50,14 +50,14 @@ custom:
           required:
             - name
             - dueDate
-            - done
+            - isGraduated
           properties:
             name:
               minLength: 1
               type: string
             dueDate:
               type: string
-            done:
+            isGraduated:
               type: boolean
 
 functions:
