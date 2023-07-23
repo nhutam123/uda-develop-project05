@@ -1,8 +1,8 @@
-import { ToDoAccess } from "./todosAcess";
+import { StudentAccess } from "./studentsAcess";
 import { createLogger } from '../utils/logger';
 
-const logger = createLogger('Log from Todos.ts')
-const toDoAccess = new ToDoAccess();
+const logger = createLogger('Log from Students.ts')
+const toDoAccess = new StudentAccess();
 const s3BucketName = process.env.S3_BUCKET_NAME;
 
 // TODO: Implement the fileStogare logic

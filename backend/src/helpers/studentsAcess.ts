@@ -1,26 +1,26 @@
 import * as AWS from "aws-sdk";
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { Types } from 'aws-sdk/clients/s3';
-import { TodoItem } from "../models/TodoItem";
-import { TodoUpdate } from "../models/TodoUpdate";
+import { Student } from "../models/Student";
+import { StudentUpdate } from "../models/StudentUpdate";
 import { createLogger } from '../utils/logger';
 
 const logger = createLogger('Log from TodoAccess.ts');
 const AWSXRay = require('aws-xray-sdk');
 const XAWS = AWSXRay.captureAWS(AWS);
 
-export class ToDoAccess {
+export class StudentAccess {
     constructor(
         private readonly docClient: DocumentClient = createDynamoDBClient(),
         private readonly s3Client: Types = new XAWS.S3({ signatureVersion: 'v4' }),
-        private readonly todoTable = process.env.TODOS_TABLE,
+        private readonly studentTable = process.env.TODOS_TABLE,
         private readonly s3BucketName = process.env.S3_BUCKET_NAME) {
     }
 
-    async getAllToDo(userId: string): Promise<TodoItem[]> {
-        logger.info(`Processing: Getting all todos of ${userId} from ${this.todoTable}`);
+    async getAllStudent(userId: string): Promise<Student[]> {
+        logger.info(`Processing: Getting all todos of ${userId} from ${this.studentTable}`);
         const params = {
-            TableName: this.todoTable,
+            TableName: this.studentTable,
             KeyConditionExpression: "#userId = :userId",
             ExpressionAttributeNames: {
                 "#userId": "userId"
@@ -31,40 +31,34 @@ export class ToDoAccess {
         };
         const result = await this.docClient.query(params).promise();
         const items = result.Items;
-        logger.info(`Processing: Get ${items.length} todos of ${userId} from ${this.todoTable}`);
+        logger.info(`Processing: Get ${items.length} todos of ${userId} from ${this.studentTable}`);
 
-        return items as TodoItem[];
+        return items as Student[];
     }
 
-    async createToDo(todoItem: TodoItem): Promise<TodoItem> {
-        logger.info(`Create new todo: Insert ${todoItem.todoId} of user: ${todoItem.userId} into table: ${this.todoTable}`)
+    async createStudent(student: Student): Promise<Student> {
+        logger.info(`Create new todo: Insert ${student.studentId} of user: ${student.userId} into table: ${this.studentTable}`)
         const params = {
-            TableName: this.todoTable,
-            Item: todoItem,
+            TableName: this.studentTable,
+            Item: student,
         };
         await this.docClient.put(params).promise();
 
-        return todoItem as TodoItem;
+        return student as Student;
     }
 
-    async updateToDo(todoUpdate: TodoUpdate, todoId: string, userId: string): Promise<TodoUpdate> {
+    async updateStudent(todoUpdate: StudentUpdate, studentId: string, userId: string): Promise<StudentUpdate> {
         logger.info('Update todo: ', todoUpdate);
+        const attachmentUrl = `https://${this.s3BucketName}.s3.us-east-1.amazonaws.com/${studentId}`
         const params = {
-            TableName: this.todoTable,
+            TableName: this.studentTable,
             Key: {
                 "userId": userId,
-                "todoId": todoId
+                "studentId": studentId
             },
-            UpdateExpression: "set #todoName = :todoName, #todoDate = :todoDate, #status = :status",
-            ExpressionAttributeNames: {
-                "#todoName": "name",
-                "#todoDate": "dueDate",
-                "#status": "done"
-            },
+            UpdateExpression: "set attachmentUrl = :attachmentUrl",
             ExpressionAttributeValues: {
-                ":todoName": todoUpdate.name,
-                ":todoDate": todoUpdate.dueDate,
-                ":status": todoUpdate.done
+                ":attachmentUrl": attachmentUrl,
             },
             ReturnValues: "UPDATED_NEW"
         };
@@ -72,16 +66,16 @@ export class ToDoAccess {
         const result = await this.docClient.update(params).promise();
         const attributes = result.Attributes;
 
-        return attributes as TodoUpdate;
+        return attributes as StudentUpdate;
     }
 
-    async deleteToDo(todoId: string, userId: string): Promise<string> {
-        logger.info('Delete todo: ', todoId);
+    async deleteStudent(studentId: string, userId: string): Promise<string> {
+        logger.info('Delete todo: ', studentId);
         const params = {
-            TableName: this.todoTable,
+            TableName: this.studentTable,
             Key: {
                 "userId": userId,
-                "todoId": todoId
+                "studentId": studentId
             },
         };
 
@@ -90,11 +84,11 @@ export class ToDoAccess {
         return;
     }
 
-    async generateUploadUrl(todoId: string): Promise<string> {
-        logger.info('Generate upload url of: ', todoId);
+    async generateUploadUrl(studentId: string): Promise<string> {
+        logger.info('Generate upload url of: ', studentId);
         const url = this.s3Client.getSignedUrl('putObject', {
             Bucket: this.s3BucketName,
-            Key: todoId,
+            Key: studentId,
             Expires: 600,
         });
 
@@ -122,20 +116,20 @@ export class ToDoAccess {
         }
       }
 
-    async getTodoItemByKeySchema(todoId: string, userId: string): Promise<TodoItem> {
-        logger.info(`Getting todo ${todoId} from ${this.todoTable}`)
+    async getStudentByKeySchema(studentId: string, userId: string): Promise<Student> {
+        logger.info(`Getting todo ${studentId} from ${this.studentTable}`)
         const params = {
-            TableName: this.todoTable,
+            TableName: this.studentTable,
             Key: {
                 "userId": userId,
-                "todoId": todoId
+                "todoId": studentId
             },
         };
         const result = await this.docClient.get(params).promise()
     
-        const item = result.Item
+        const student = result.Item
     
-        return item as TodoItem
+        return student as Student
       }
     
 }

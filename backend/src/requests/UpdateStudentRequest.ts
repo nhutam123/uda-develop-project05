@@ -1,8 +1,8 @@
 /**
  * Fields in a request to update a single TODO item.
  */
-export interface UpdateTodoRequest {
+export type UpdateStudentRequest =  {
   name: string
   dueDate: string
-  done: boolean
+  isGraduated: boolean
 }

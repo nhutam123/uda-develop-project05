@@ -1,19 +1,19 @@
 import 'source-map-support/register'
 
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
-import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
+import { UpdateStudentRequest } from '../../requests/UpdateStudentRequest'
 import { getUserId } from '../utils'
 import { createLogger } from '../../utils/logger'
-import { updateToDo } from '../../helpers/todos'
+import { updateStudent } from '../../helpers/students'
 
-const logger = createLogger('UpdateTodo');
+const logger = createLogger('UpdateStudent');
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Updating Event: ', event);
     const userId = getUserId(event)
-    const todoId = event.pathParameters.todoId;
-    const updatedTodo: UpdateTodoRequest = JSON.parse(event.body);
-    const toDoItem = await updateToDo(updatedTodo, todoId, userId);
+    const studentId = event.pathParameters.studentId;
+    const updatedStudent: UpdateStudentRequest = JSON.parse(event.body);
+    const toDoItem = await updateStudent(updatedStudent, studentId, userId);
 
     return {
         statusCode: 200,

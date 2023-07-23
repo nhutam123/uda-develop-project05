@@ -3,14 +3,14 @@ import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 import { getUserId } from '../utils';
 import { createLogger } from '../../utils/logger';
-import { getAllToDo } from '../../helpers/todos';
+import { getAllStudent } from '../../helpers/students';
 
-const logger = createLogger('GetTodos');
+const logger = createLogger('GetStudents');
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Getting All Event: ', event);
     const userId = getUserId(event);
-    const toDos = await getAllToDo(userId);
+    const students = await getAllStudent(userId);
 
     return {
         statusCode: 200,
@@ -19,7 +19,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
             'Access-Control-Allow-Credentials': true
         },
         body: JSON.stringify({
-            "items": toDos,
+            "items": students,
         }),
     }
 };

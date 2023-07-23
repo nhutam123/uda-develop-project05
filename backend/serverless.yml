@@ -1,7 +1,7 @@
 # TODO: Change the name of the org 
 org: tamln2
-app: serverless-todo
-service: serverless-todo
+app: serverless-student-management
+service: serverless-student-management
 
 plugins:
   - serverless-webpack
@@ -22,7 +22,7 @@ provider:
 
   environment:
     UDACITY_PROJECT_NAME: tamln2-serveless-${self:provider.stage}
-    TODOS_TABLE: tamln2-serverless-${self:provider.stage}
+    STUDENTS_TABLE: tamln2-serverless-${self:provider.stage}
     S3_BUCKET_NAME: tamln2-serverless-${self:provider.stage}
 
 
@@ -34,10 +34,8 @@ custom:
         title: serverless-api
         description: serverless-api
     models:
-      - name: CreateTodoRequest
+      - name: CreateStudentRequest
         contentType: "application/json"
-        # schema: ${file(models/create-todo-validate-model.json)}
-        # Example for not use validate.json
         schema:
           required:
             - name
@@ -48,9 +46,8 @@ custom:
               type: string
             dueDate:
               type: string
-      - name: UpdateTodoRequest
+      - name: UpdateStudentRequest
         contentType: "application/json"
-        # schema: ${file(models/update-todo-validate-model.json)}
         schema:
           required:
             - name
@@ -69,98 +66,98 @@ functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  GetTodos:
-    handler: src/lambda/http/getTodos.handler
+  GetStudents:
+    handler: src/lambda/http/getStudents.handler
     events:
       - http:
           method: get
-          path: todos
+          path: students
           cors: true
           authorizer: Auth
-    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-get-todo-role-${self:provider.stage}
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-get-student-role-${self:provider.stage}
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:Query
           - dynamodb:GetItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.STUDENTS_TABLE}
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
         Resource: 
           - '*'
 
-# Create todo
-  CreateTodo:
-    handler: src/lambda/http/createTodo.handler
+# Create Student
+  CreateStudent:
+    handler: src/lambda/http/createStudent.handler
     events:
       - http:
           method: post
-          path: todos
+          path: students
           cors: true
           authorizer: Auth
           documentation:
-            summary: "Create a new todo item"
-            description: "Create a new todo item"
+            summary: "Create a new student item"
+            description: "Create a new student item"
             requestModels:
-              "application/json": CreateTodoRequest
+              "application/json": CreateStudentRequest
           reqValidatorName: RequestBodyValidator
-    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-create-todo-role-${self:provider.stage}
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-create-student-role-${self:provider.stage}
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:PutItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.STUDENTS_TABLE}
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
         Resource: 
           - '*'
 
-# Update todo
-  UpdateTodo:
-    handler: src/lambda/http/updateTodo.handler
+# Update student
+  UpdateStudent:
+    handler: src/lambda/http/updateStudent.handler
     events:
       - http:
           method: patch
-          path: todos/{todoId}
+          path: students/{studentId}
           cors: true
           authorizer: Auth
           documentation:
-            summary: "Update a todo item"
-            description: "Update a todo item"
+            summary: "Update a student item"
+            description: "Update a student item"
             requestModels:
-              "application/json": UpdateTodoRequest
+              "application/json": UpdateStudentRequest
           reqValidatorName: RequestBodyValidator
-    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-update-todo-role-${self:provider.stage}
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-update-student-role-${self:provider.stage}
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:UpdateItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.STUDENTS_TABLE}
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
         Resource: 
           - '*'
 
-# Delete Todo
-  DeleteTodo:
-    handler: src/lambda/http/deleteTodo.handler
+# Delete Student
+  DeleteStudent:
+    handler: src/lambda/http/deleteStudent.handler
     events:
       - http:
           method: delete
-          path: todos/{todoId}
+          path: students/{studentId}
           cors: true
           authorizer: Auth
-    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-delete-todo-role-${self:provider.stage}
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-delete-student-role-${self:provider.stage}
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:DeleteItem
           - dynamodb:Query
           - dynamodb:GetItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.STUDENTS_TABLE}
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
@@ -176,7 +173,7 @@ functions:
     events:
       - http:
           method: post
-          path: todos/{todoId}/attachment
+          path: students/{studentId}/attachment
           cors: true
           authorizer: Auth
     iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-s3-upload-role-${self:provider.stage}
@@ -193,22 +190,21 @@ functions:
 
 resources:
   Resources:
-    # TODO: Add any necessary AWS resources
-    TodosTable:
+    StudentsTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
           - AttributeName: userId
             AttributeType: S
-          - AttributeName: todoId
+          - AttributeName: studentId
             AttributeType: S
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
-          - AttributeName: todoId
+          - AttributeName: studentId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:provider.environment.TODOS_TABLE}
+        TableName: ${self:provider.environment.STUDENTS_TABLE}
     onlyBody:
       Type: "AWS::ApiGateway::RequestValidator"
       Properties:

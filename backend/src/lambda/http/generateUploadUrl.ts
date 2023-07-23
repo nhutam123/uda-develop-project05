@@ -8,8 +8,8 @@ const logger = createLogger('GenerateUploadUrl');
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Generating UploadUrl Event: ', event);
-    const todoId = event.pathParameters.todoId;
-    const URL = await generateUploadUrl(todoId);
+    const studentId = event.pathParameters.studentId;
+    const URL = await generateUploadUrl(studentId);
 
     return {
         statusCode: 202,
