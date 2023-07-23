@@ -5,15 +5,15 @@ import Axios from 'axios'
 import { UpdateStudentRequest } from '../types/UpdateTodoRequest';
 
 export async function getStudents(idToken: string): Promise<Student[]> {
-  console.log('Fetching todos')
+  console.log('Fetching students')
 
-  const response = await Axios.get(`${apiEndpoint}/todos`, {
+  const response = await Axios.get(`${apiEndpoint}/students`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
     },
   })
-  console.log('Todos:', response.data)
+  console.log('Students:', response.data)
   return response.data.items
 }
 

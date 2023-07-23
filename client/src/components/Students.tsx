@@ -40,8 +40,8 @@ export class Students extends React.PureComponent<StudentsProps, StudentState> {
     this.setState({ newStudentName: event.target.value })
   }
 
-  onEditButtonClick = (todoId: string) => {
-    this.props.history.push(`/todos/${todoId}/edit`)
+  onEditButtonClick = (studentId: string) => {
+    this.props.history.push(`/students/${studentId}/edit`)
   }
 
   onStudentCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {

@@ -13,7 +13,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     const userId = getUserId(event)
     const studentId = event.pathParameters.studentId;
     const updatedStudent: UpdateStudentRequest = JSON.parse(event.body);
-    const toDoItem = await updateStudent(updatedStudent, studentId, userId);
+    const student = await updateStudent(updatedStudent, studentId, userId);
 
     return {
         statusCode: 200,
@@ -22,7 +22,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
             'Access-Control-Allow-Credentials': true 
         },
         body: JSON.stringify({
-            "item": toDoItem
+            "item": student
         }),
     }
 };
