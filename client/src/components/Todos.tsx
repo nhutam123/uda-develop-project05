@@ -14,7 +14,7 @@ import {
   Loader
 } from 'semantic-ui-react'
 
-import { createTodo, deleteTodo, getTodos, patchTodo } from '../api/todos-api'
+import { createTodo, deleteTodo, getTodos, patchTodo } from '../api/students-api'
 import Auth from '../auth/Auth'
 import { Todo } from '../types/Todo'
 
