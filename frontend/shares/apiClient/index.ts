@@ -18,11 +18,6 @@ export const apiClient = (idToken: string): AxiosInstance => {
     }
   })
 
-  // axiosInstance.interceptors.response.use(
-  //   (response: AxiosResponse): Promise<AxiosError | AxiosResponse> =>
-  //     Promise.resolve(response),
-  //   (error: AxiosError) => Promise.reject(error)
-  // )
   axiosInstance.interceptors.request.use(
     (request) => request,
 
