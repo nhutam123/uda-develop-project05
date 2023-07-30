@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Wrapper = styled.div`
   display: flex;
@@ -6,23 +6,25 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #efefef;
-`;
+`
 
 const Container = styled.div`
   width: 80%;
   display: flex;
   margin-top: 20px;
-`;
+`
 
-const Content = styled.div``;
+const Content = styled.div`
+  padding: 0 20px;
+`
 
 const SidebarContainer = styled.div`
   width: 300px;
-`;
+`
 
 export const Styles = {
   Wrapper,
   Container,
   Content,
-  SidebarContainer,
-};
+  SidebarContainer
+}

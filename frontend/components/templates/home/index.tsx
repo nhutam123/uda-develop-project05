@@ -21,6 +21,6 @@ export const HomeTemplate: FC<HomeProps> = (props) => {
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
+  gap: 30px 40px;
 `
