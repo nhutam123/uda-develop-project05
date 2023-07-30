@@ -1,7 +1,13 @@
+import styled from 'styled-components'
+
 export const Login = () => {
   return (
     <div>
-      <h1>Login</h1>
+      <Style>Login</Style>
     </div>
   )
 }
+
+const Style = styled.div`
+  color: red;
+`

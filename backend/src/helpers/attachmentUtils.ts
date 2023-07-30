@@ -5,7 +5,6 @@ const logger = createLogger('Log from Students.ts')
 const studentAccess = new StudentAccess()
 const s3BucketName = process.env.S3_BUCKET_NAME
 
-// TODO: Implement the fileStogare logic
 export async function removeImageInS3(id: string): Promise<void> {
   logger.info(`Removiong Image id: ${id} in S3 bucket: ${s3BucketName}`)
 

@@ -34,6 +34,18 @@ custom:
         title: serverless-api
         description: serverless-api
     models:
+      - name: CreateCourseRequest
+        contentType: "application/json"
+        schema:
+          required:
+            - title
+            - dueDate
+          properties:
+            name:
+              minLength: 1
+              type: string
+            dueDate:
+              type: string
       - name: CreateStudentRequest
         contentType: "application/json"
         schema:
@@ -63,9 +75,12 @@ custom:
               type: boolean
 
 functions:
+  Auth:
+    handler: src/lambda/auth/auth0Authorizer.handler
+
   # get courses
   GetCourses:
-    handler: src\lambda\publicApi\getcourses.handler
+    handler: src/lambda/publicApi/getcourses.handler
     events:
       - http:
           method: get
@@ -83,9 +98,32 @@ functions:
           - xray:PutTraceSegments
         Resource:
           - "*"
-  Auth:
-    handler: src/lambda/auth/auth0Authorizer.handler
-
+    # create course
+  CreateCourse:
+    handler: src/lambda/publicApi/createCourse.handler
+    events:
+      - http:
+          method: post
+          path: courses
+          cors: true
+          documentation:
+            summary: "Create a new course item"
+            description: "Create a new course item"
+            requestModels:
+              "application/json": CreateCourseRequest
+          reqValidatorName: RequestBodyValidator
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-create-course-role-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.COURSES_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
+  # Get student
   GetStudents:
     handler: src/lambda/http/getStudents.handler
     events:
@@ -241,14 +279,14 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: CourseId
+          - AttributeName: courseId
             AttributeType: S
-          - AttributeName: userId
+          - AttributeName: typeId
             AttributeType: S
         KeySchema:
-          - AttributeName: userId
+          - AttributeName: typeId
             KeyType: HASH
-          - AttributeName: CourseId
+          - AttributeName: courseId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.COURSES_TABLE}

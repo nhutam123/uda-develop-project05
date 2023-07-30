@@ -1,8 +1,12 @@
 export type Course = {
+  videoUrl: string
   typeId: string
+  dueDate: string
   courseId: string
   createdAt: string
   title: string
-  dueDate: string
-  videoUrl?: string
+}
+
+export type CourseData = {
+  items: Course[]
 }
