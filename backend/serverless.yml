@@ -23,6 +23,8 @@ provider:
     UDACITY_PROJECT_NAME: tamln2-serveless-${self:provider.stage}
     STUDENTS_TABLE: tamln2-serverless-${self:provider.stage}
     S3_BUCKET_NAME: tamln2-serverless-${self:provider.stage}
+    COURSES_TABLE: tamln2-courses-${self:provider.stage}
+    S3_BUCKET_COURSES: tamln2-courses-${self:provider.stage}
 
 custom:
   documentation:
@@ -61,6 +63,26 @@ custom:
               type: boolean
 
 functions:
+  # get courses
+  GetCourses:
+    handler: src\lambda\publicApi\getcourses.handler
+    events:
+      - http:
+          method: get
+          path: courses
+          cors: true
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-get-course-role-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.COURSES_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
@@ -215,6 +237,21 @@ resources:
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
         ValidateRequestParameters: false
+    CoursesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: CourseId
+            AttributeType: S
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: CourseId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.COURSES_TABLE}
     AttachmentsBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -237,7 +274,28 @@ resources:
           BlockPublicPolicy: false
           IgnorePublicAcls: false
           RestrictPublicBuckets: false
-
+    CoursesBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.S3_BUCKET_COURSES}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+          IgnorePublicAcls: false
+          RestrictPublicBuckets: false
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
       Properties:
@@ -285,3 +343,16 @@ resources:
               Action: "s3:GetObject"
               Resource: "arn:aws:s3:::${self:provider.environment.S3_BUCKET_NAME}/*"
         Bucket: !Ref AttachmentsBucket
+    CourseBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        PolicyDocument:
+          Id: MyPolicy
+          Version: "2012-10-17"
+          Statement:
+            - Sid: PublicReadForGetBucketObjects
+              Effect: Allow
+              Principal: "*"
+              Action: "s3:GetObject"
+              Resource: "arn:aws:s3:::${self:provider.environment.S3_BUCKET_COURSES}/*"
+        Bucket: !Ref CoursesBucket
