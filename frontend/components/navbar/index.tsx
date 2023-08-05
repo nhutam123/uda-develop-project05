@@ -1,22 +1,22 @@
-import { Styles } from "./styles";
+import { Styles } from './styles'
 
-const { Nav, NavContainer, NavLink } = Styles;
+const { Nav, NavContainer, NavLink } = Styles
 
 export const Navbar = () => {
   return (
     <NavContainer>
       <Nav>
-        <NavLink href="/">Do choi</NavLink>
+        <NavLink href="/">Java</NavLink>
       </Nav>
       <Nav>
-        <NavLink href="/">Quan ao</NavLink>
+        <NavLink href="/">Javascript</NavLink>
       </Nav>
       <Nav>
-        <NavLink href="/">Bim sua</NavLink>
+        <NavLink href="/">Python</NavLink>
       </Nav>
       <Nav>
-        <NavLink href="/">Keo banh</NavLink>
+        <NavLink href="/">Reactjx</NavLink>
       </Nav>
     </NavContainer>
-  );
-};
+  )
+}
