@@ -26,7 +26,8 @@ export const getCoursesByType = async (type: string): Promise<Course[]> => {
   logger.info(`Processing: Getting all Course from ${courseTable}`)
   const params = {
     TableName: courseTable,
-    KeyConditionExpression: '#id = :id and #type = :type',
+    FilterExpression: ' #type = :type',
+    KeyConditionExpression: '#id = :id',
     ExpressionAttributeNames: {
       '#id': 'typeId',
       '#type': 'courseType'
