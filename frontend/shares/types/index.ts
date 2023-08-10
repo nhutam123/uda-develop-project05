@@ -5,7 +5,7 @@ export type Course = {
   courseId: string
   createdAt: string
   title: string
-  login: () => void
+  login?: () => void
 }
 
 export type CourseData = {

@@ -61,26 +61,22 @@ export const deleteStudent = async (
 //   )
 // }
 
-// export async function getUploadUrl(
-//   idToken: string,
-//   studentId: string
-// ): Promise<string> {
-//   const response = await Axios.post(
-//     `${apiEndpoint}/students/${studentId}/attachment`,
-//     '',
-//     {
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${idToken}`
-//       }
-//     }
-//   )
-//   return response.data.uploadUrl
-// }
+export async function getUploadUrl(courseId: string): Promise<string> {
+  const response = await Axios.post(
+    `${apiEndpoint}/students${courseId}/attachment`,
+    '',
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  return response.data.uploadUrl
+}
 
-// export async function uploadFile(
-//   uploadUrl: string,
-//   file: Buffer
-// ): Promise<void> {
-//   await Axios.put(uploadUrl, file)
-// }
+export async function uploadFile(
+  uploadUrl: string,
+  file: Buffer
+): Promise<void> {
+  await Axios.put(uploadUrl, file)
+}

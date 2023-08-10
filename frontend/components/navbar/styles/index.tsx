@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Nav = styled.li`
   padding: 10px;
@@ -7,15 +7,16 @@ const Nav = styled.li`
     cursor: pointer;
     color: #eecb2e;
   }
-`;
+`
 
 const NavContainer = styled.ul`
   margin: 0px;
   padding: 0px;
-`;
+`
 
-const NavLink = styled.a`
-  font-size: 14px;
+const NavLink = styled.button`
+  display: flex;
+  font-size: 20px;
   font-weight: bold;
   width: 100%;
   height: 100%;
@@ -25,11 +26,13 @@ const NavLink = styled.a`
     cursor: pointer;
     color: #97ce3f;
   }
-  text-decoration: none;
-`;
+  color: blue;
+  border: none;
+  background-color: #fff;
+`
 
 export const Styles = {
   Nav,
   NavContainer,
-  NavLink,
-};
+  NavLink
+}

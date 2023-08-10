@@ -2,7 +2,6 @@ import { Styles } from './styles'
 import { Course, CreateCourseRequest } from '../../shares/types'
 import { Button } from '../button'
 import { useRouter } from 'next/router'
-import { createStudent } from '../../services/student/students-api'
 import { calculateDueDate } from '../../shares/utils'
 
 type CardType = {
