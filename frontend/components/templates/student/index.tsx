@@ -114,6 +114,7 @@ const CourseContainer = styled.div`
 
 const Container = styled.div`
   width: 800px;
+  margin-bottom: 40px;
 `
 
 const Video = styled.video`
