@@ -1,5 +1,5 @@
 import { StudentAccess } from './studentsAcess'
-import { createLogger } from '../utils/logger'
+import { createLogger } from '../../utils/logger'
 
 const logger = createLogger('Log from Students.ts')
 const studentAccess = new StudentAccess()

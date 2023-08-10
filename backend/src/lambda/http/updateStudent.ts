@@ -1,28 +1,34 @@
 import 'source-map-support/register'
 
-import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
-import { UpdateStudentRequest } from '../../requests/UpdateStudentRequest'
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyHandler,
+  APIGatewayProxyResult
+} from 'aws-lambda'
+import { UpdateStudentRequest } from '../../models/UpdateStudentRequest'
 import { getUserId } from '../utils'
 import { createLogger } from '../../utils/logger'
-import { updateStudent } from '../../helpers/students'
+import { updateStudent } from '../../helpers/students/students'
 
-const logger = createLogger('UpdateStudent');
+const logger = createLogger('UpdateStudent')
 
-export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    logger.info('Updating Event: ', event);
-    const userId = getUserId(event)
-    const studentId = event.pathParameters.studentId;
-    const updatedStudent: UpdateStudentRequest = JSON.parse(event.body);
-    const student = await updateStudent(updatedStudent, studentId, userId);
+export const handler: APIGatewayProxyHandler = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  logger.info('Updating Event: ', event)
+  const userId = getUserId(event)
+  const studentId = event.pathParameters.studentId
+  const updatedStudent: UpdateStudentRequest = JSON.parse(event.body)
+  const student = await updateStudent(updatedStudent, studentId, userId)
 
-    return {
-        statusCode: 200,
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            'Access-Control-Allow-Credentials': true 
-        },
-        body: JSON.stringify({
-            "item": student
-        }),
-    }
-};
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
+    },
+    body: JSON.stringify({
+      item: student
+    })
+  }
+}

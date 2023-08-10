@@ -5,10 +5,10 @@ import {
   APIGatewayProxyResult
 } from 'aws-lambda'
 
-import { deleteStudent } from '../../helpers/students'
+import { deleteStudent } from '../../helpers/students/students'
 import { getUserId } from '../utils'
 import { createLogger } from '../../utils/logger'
-import { removeImageInS3 } from '../../helpers/attachmentUtils'
+import { removeImageInS3 } from '../../helpers/students/attachmentUtils'
 
 const logger = createLogger('Log from deleteStudent.ts')
 

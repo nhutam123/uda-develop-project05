@@ -1,5 +1,5 @@
 import { Course } from '../../models/Course'
-import { CreateCourseRequest } from '../../requests/CreateCourseRequest'
+import { CreateCourseRequest } from '../../models/CreateCourseRequest'
 import { createLogger } from '../../utils/logger'
 import { s3BucketName } from '../const'
 import { getAllCourse, createCourse, getCoursesByType } from './coursesAcess'

@@ -1,6 +1,6 @@
 import { Student } from '../models/Student'
-import { CreateStudentRequest } from '../requests/CreateStudentRequest'
-import { UpdateStudentRequest } from '../requests/UpdateStudentRequest'
+import { CreateStudentRequest } from '../models/CreateStudentRequest'
+import { UpdateStudentRequest } from '../models/UpdateStudentRequest'
 import { StudentUpdate } from '../models/StudentUpdate'
 import { StudentAccess } from './studentsAcess'
 import { createLogger } from '../utils/logger'

@@ -6,7 +6,7 @@ import {
   APIGatewayProxyResult
 } from 'aws-lambda'
 import { createLogger } from '../../utils/logger'
-import { CreateCourseRequest } from '../../requests/CreateCourseRequest'
+import { CreateCourseRequest } from '../../models/CreateCourseRequest'
 import { createCourseApi } from '../../helpers/courses/courses'
 
 const logger = createLogger('Log from createCourse.ts')

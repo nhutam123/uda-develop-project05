@@ -1,9 +1,9 @@
 import * as AWS from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { Types } from 'aws-sdk/clients/s3'
-import { Student } from '../models/Student'
-import { StudentUpdate } from '../models/StudentUpdate'
-import { createLogger } from '../utils/logger'
+import { Student } from '../../models/Student'
+import { StudentUpdate } from '../../models/StudentUpdate'
+import { createLogger } from '../../utils/logger'
 
 const logger = createLogger('Log from StudentAccess.ts')
 const AWSXRay = require('aws-xray-sdk')
