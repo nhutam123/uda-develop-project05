@@ -19,7 +19,26 @@ export const getAllCourse = async (): Promise<Course[]> => {
   const result = await docClient.query(params).promise()
   const items = result.Items
   logger.info(`Processing: Get ${items.length}  from ${courseTable}`)
+  return items as Course[]
+}
 
+export const getCoursesByType = async (type: string): Promise<Course[]> => {
+  logger.info(`Processing: Getting all Course from ${courseTable}`)
+  const params = {
+    TableName: courseTable,
+    KeyConditionExpression: '#id = :id , #type = :type',
+    ExpressionAttributeNames: {
+      '#id': 'typeId',
+      '#type': 'courseType'
+    },
+    ExpressionAttributeValues: {
+      ':id': '1',
+      ':type': type
+    }
+  }
+  const result = await docClient.query(params).promise()
+  const items = result.Items
+  logger.info(`Processing: Get ${items.length}  from ${courseTable}`)
   return items as Course[]
 }
 

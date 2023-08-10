@@ -98,6 +98,26 @@ functions:
           - xray:PutTraceSegments
         Resource:
           - "*"
+  # get courses by courseType
+  GetCoursesByType:
+    handler: src/lambda/publicApi/getCoursesByType.handler
+    events:
+      - http:
+          method: get
+          path: courses/{courseType}
+          cors: true
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-get-course-role-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.COURSES_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
     # create course
   CreateCourse:
     handler: src/lambda/publicApi/createCourse.handler

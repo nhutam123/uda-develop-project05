@@ -6,25 +6,24 @@ import {
   APIGatewayProxyResult
 } from 'aws-lambda'
 import { createLogger } from '../../utils/logger'
-import { CreateCourseRequest } from '../../requests/CreateCourseRequest'
-import { createCourseApi } from '../../helpers/courses/courses'
+import { getCoursesByTypeApi } from '../../helpers/courses/courses'
 
-const logger = createLogger('Log from createCourse.ts')
+const logger = createLogger('GetCoursesByType')
 
 export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  logger.info('Creating Event: ', event)
-  const newCourse: CreateCourseRequest = JSON.parse(event.body)
-  const course = await createCourseApi(newCourse)
+  logger.info('Getting All Event: ', event)
+  const courseType = event.pathParameters.courseType
+  const coureses = await getCoursesByTypeApi(courseType)
   return {
-    statusCode: 201,
+    statusCode: 200,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true
     },
     body: JSON.stringify({
-      item: course
+      items: coureses
     })
   }
 }

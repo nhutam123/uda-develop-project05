@@ -5,4 +5,5 @@ export type Course = {
   title: string
   dueDate: string
   videoUrl?: string
+  courseType: string
 }
