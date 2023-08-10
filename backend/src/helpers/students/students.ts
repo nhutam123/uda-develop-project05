@@ -1,9 +1,9 @@
-import { Student } from '../models/Student'
-import { CreateStudentRequest } from '../models/CreateStudentRequest'
-import { UpdateStudentRequest } from '../models/UpdateStudentRequest'
-import { StudentUpdate } from '../models/StudentUpdate'
+import { Student } from '../../models/Student'
+import { CreateStudentRequest } from '../../models/CreateStudentRequest'
+import { UpdateStudentRequest } from '../../models/UpdateStudentRequest'
+import { StudentUpdate } from '../../models/StudentUpdate'
 import { StudentAccess } from './studentsAcess'
-import { createLogger } from '../utils/logger'
+import { createLogger } from '../../utils/logger'
 
 const logger = createLogger('Log from Students.ts')
 const uuidv4 = require('uuid/v4')

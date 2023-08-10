@@ -1,8 +1,0 @@
-export type Student = {
-  studentId: string
-  createdAt: string
-  name: string
-  dueDate: string
-  isGraduated: boolean
-  imageUrl?: string
-}

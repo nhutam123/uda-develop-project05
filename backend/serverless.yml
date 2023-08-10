@@ -106,7 +106,7 @@ functions:
           method: get
           path: courses/{courseType}
           cors: true
-    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-get-course-role-${self:provider.stage}
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-get-course-role-by-type-${self:provider.stage}
     iamRoleStatements:
       - Effect: Allow
         Action:

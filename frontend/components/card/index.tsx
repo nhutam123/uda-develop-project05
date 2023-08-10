@@ -37,7 +37,7 @@ export const Card = (props: CardType) => {
 
   return (
     <Container>
-      <Video width="200" controls src={videoUrl} height="140" />
+      <Video width="200" controls src={videoUrl + '.mp4'} height="140" />
       <Header>{title}</Header>
       <Description>
         <Typo>Price: 100 $</Typo>

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, AxiosInstance } from 'axios'
 
-const apiId = '78ewn306w3'
+const apiId = '49181z09f9'
 export const apiEndpoint = `https://${apiId}.execute-api.us-east-1.amazonaws.com/test`
 
 export const authConfig = {

@@ -8,7 +8,6 @@ import { getStudents, deleteStudent } from '../../services/student/students-api'
 const StudentPage: NextPage = () => {
   const [courses, setCourses] = useState<Student[]>([])
   const [token, setToken] = useState('')
-  const router = useRouter()
 
   const { query } = useRouter()
   const { title, videoUrl } = query

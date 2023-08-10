@@ -24,5 +24,5 @@ export type Student = {
   name: string
   dueDate: string
   isGraduated: boolean
-  imageUrl?: string
+  videoUrl?: string
 }
