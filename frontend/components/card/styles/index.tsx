@@ -9,6 +9,7 @@ const Container = styled.div`
   box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, 0.2);
   padding: 10px;
   background-color: white;
+  height: 400px;
 `
 
 const Header = styled.div`
@@ -24,7 +25,7 @@ const Typo = styled.div`
 `
 
 const ButtonContainer = styled.div`
-  margin: 10px 0;
+  margin: 20px 0;
 `
 
 const Description = styled.div`

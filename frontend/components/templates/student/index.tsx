@@ -3,18 +3,20 @@ import styled from 'styled-components'
 import { Student } from '../../../shares/types'
 import { Button } from '../../button'
 import { useRouter } from 'next/router'
+import { Loading } from '../../atoms/loading'
 
 type StudentProps = {
   title: string
   videoUrl: string
   courses: Student[]
+  isLoading: boolean
   handleDelete: (studentId: string) => void
 }
 
 export const StudentTemplate: FC<StudentProps> = (props) => {
   const [url, setUrl] = useState('')
   const [courseTitle, setCourseTitle] = useState('')
-  const { courses, handleDelete } = props
+  const { courses, handleDelete, isLoading } = props
   const router = useRouter()
 
   const { title, videoUrl } = router.query
@@ -41,43 +43,53 @@ export const StudentTemplate: FC<StudentProps> = (props) => {
 
   return (
     <Container>
-      <>
-        <Header>
-          {courses.length ? title || courseTitle : 'No lessons registered yet'}
-        </Header>
-        <Video
-          width="200"
-          controls
-          src={(videoUrl || url) + '.mp4'}
-          height="140"
-        />
-      </>
-      <ListCourseContainer>
-        {courses.map((course) => (
-          <CourseContainer key={course.studentId}>
-            <TimeContainer>
-              <h3>latest time:</h3>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <>
+            {courses.length ? (
+              <>
+                <Header>{title || courseTitle}</Header>
+                <Video
+                  width="200"
+                  controls
+                  src={(videoUrl || url) + '.mp4'}
+                  height="140"
+                />
+              </>
+            ) : (
+              <Header>No lessons registered yet</Header>
+            )}
+          </>
+          <ListCourseContainer>
+            {courses.map((course) => (
+              <CourseContainer key={course.studentId}>
+                <TimeContainer>
+                  <h3>latest time:</h3>
 
-              <Title> {course.dueDate}</Title>
-            </TimeContainer>
-            <Title>{course.name}</Title>
-            <ButtonContainer>
-              <Button
-                onClick={() => handleClick(course)}
-                text="Learn"
-                backgroundColor="blue"
-                color="#fff"
-              />
-              <Button
-                backgroundColor="red"
-                color="white"
-                text="delete"
-                onClick={() => deleteItem(course.studentId)}
-              />
-            </ButtonContainer>
-          </CourseContainer>
-        ))}
-      </ListCourseContainer>
+                  <Title> {course.dueDate}</Title>
+                </TimeContainer>
+                <Title>{course.name}</Title>
+                <ButtonContainer>
+                  <Button
+                    onClick={() => handleClick(course)}
+                    text="Learn"
+                    backgroundColor="blue"
+                    color="#fff"
+                  />
+                  <Button
+                    backgroundColor="red"
+                    color="white"
+                    text="delete"
+                    onClick={() => deleteItem(course.studentId)}
+                  />
+                </ButtonContainer>
+              </CourseContainer>
+            ))}
+          </ListCourseContainer>
+        </>
+      )}
     </Container>
   )
 }
@@ -106,7 +118,7 @@ const CourseContainer = styled.div`
   align-items: center;
   height: 100px;
   width: 100%;
-  border: 1px solid black;
+  border: 1px solid #ccc;
   border-radius: 10px;
   padding-left: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

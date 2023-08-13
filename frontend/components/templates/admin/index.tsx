@@ -12,7 +12,8 @@ const courseDefault: Course = {
   dueDate: '',
   courseId: '',
   createdAt: '',
-  title: ''
+  title: '',
+  courseType: ''
 }
 
 export const AdminTemplate = () => {

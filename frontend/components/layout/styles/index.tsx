@@ -16,6 +16,11 @@ const Container = styled.div`
 
 const Content = styled.div`
   padding: 0 20px;
+  background-color: white;
+  border-radius: 8px;
+  width: 900px;
+  display: flex;
+  justify-content: center;
 `
 
 const SidebarContainer = styled.div`
