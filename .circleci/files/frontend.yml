@@ -12,6 +12,11 @@ Resources:
     Properties:
       BucketName: !Sub "tamln2-frontend"
       AccessControl: PublicRead
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: 404.html
