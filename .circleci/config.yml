@@ -110,39 +110,13 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file frontend.yml \
-              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:5}" \
+              --stack-name "tamln2-frontend-${CIRCLE_WORKFLOW_ID:0:5}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:5}" \
-              --tags project=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:5}
+              --tags project=tamln2-frontend-${CIRCLE_WORKFLOW_ID:0:5}
       - persist_to_workspace:
           root: .
           paths:
             - .circleci/ansible/inventory
-      - destroy_environment:
-          id: ${CIRCLE_WORKFLOW_ID:0:5}
-          when: on_fail
-
-  configure-infrastructure:
-    executor: python
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints: ["e8:0e:77:6f:43:d0:2d:f7:ec:d1:63:8a:b5:76:60:68"]
-      - attach_workspace:
-          at: .
-      - run:
-          name: Install dependencies
-          working_directory: ./.circleci/ansible
-          command: |
-            apk add --update ansible
-            ansible --version
-      - run:
-          name: Configure server
-          working_directory: ./.circleci/ansible
-          command: |
-            pwd &&
-            ls -la
-            cat inventory
-            ansible-playbook -i inventory configure-server.yml -vvv
       - destroy_environment:
           id: ${CIRCLE_WORKFLOW_ID:0:5}
           when: on_fail
@@ -165,7 +139,7 @@ jobs:
           name: Deploy frontend objects to S3
           working_directory: ./frontend
           command: |
-            aws s3 cp ./dist "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:5}" --recursive
+            aws s3 cp ./dist "s3://tamln2-frontend" --recursive
       - persist_to_workspace:
           root: .
           paths:
