@@ -256,7 +256,8 @@ workflows:
       #       - test-frontend
       ## INFRASTRUCTURE
       - deploy-infrastructure:
-          requires: [scan-frontend]
+          requires:
+            - build-frontend
           filters:
             branches:
               only:
@@ -269,7 +270,7 @@ workflows:
             - deploy-infrastructure
       - cloudfront-update:
           requires:
-            - smoke-test
+            - deploy-frontend
       - cleanup:
           requires:
             - cloudfront-update
