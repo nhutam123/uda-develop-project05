@@ -11,7 +11,9 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub "tamln2-frontend"
-      AccessControl: PublicRead
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerPreferred
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: 404.html
