@@ -1,12 +1,14 @@
-import { Button } from '../../button'
+import { Button } from '../../atoms/button'
 import { Styles } from './styles'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../../services/authen'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { Colors } from '../../../shares/const/colors'
 
 const { Container, Search, Logo } = Styles
+const { GREEN, RED, WHITE } = Colors
 
 export const Header = () => {
   const { login, logout, session } = useAuth()
@@ -35,16 +37,16 @@ export const Header = () => {
         <ButtonContainer>
           <Button
             text="Logout"
-            backgroundColor="red"
+            backgroundColor={RED}
             color="#FFFFFF"
-            borderColor="red"
+            borderColor={RED}
             onClick={logout}
           />
           <Button
             text="MyPage"
-            backgroundColor="green"
+            backgroundColor={GREEN}
             color="#FFFFFF"
-            borderColor="green"
+            borderColor={GREEN}
             onClick={() => {
               router.push('/student')
             }}
@@ -53,9 +55,9 @@ export const Header = () => {
       ) : (
         <Button
           text="Login"
-          backgroundColor="green"
+          backgroundColor={GREEN}
           color="#FFFFFF"
-          borderColor="green"
+          borderColor={GREEN}
           onClick={login}
         />
       )}

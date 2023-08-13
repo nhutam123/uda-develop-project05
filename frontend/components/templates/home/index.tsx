@@ -1,26 +1,38 @@
 import styled from 'styled-components'
 import { Card } from '../../card'
 import { Course, CreateCourseRequest } from '../../../shares/types'
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
+import { Loading } from '../../atoms/loading'
 
 type HomeProps = {
   items: Course[]
   login: () => void
   handleJoinCourse: (idToken: string, newStudent: CreateCourseRequest) => void
+  isLoading: boolean
 }
 
 export const HomeTemplate: FC<HomeProps> = (props) => {
-  const { items, login, handleJoinCourse } = props
+  const { items, login, handleJoinCourse, isLoading } = props
 
   return (
-    <Container>
-      {items.map((item) => (
-        <Card
-          {...{ item: item, login: login, handleJoinCourse: handleJoinCourse }}
-          key={item.courseId}
-        />
-      ))}
-    </Container>
+    <Fragment>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Container>
+          {items.map((item) => (
+            <Card
+              {...{
+                item: item,
+                login: login,
+                handleJoinCourse: handleJoinCourse
+              }}
+              key={item.courseId}
+            />
+          ))}
+        </Container>
+      )}
+    </Fragment>
   )
 }
 

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Student } from '../../shares/types'
 import { getStudents, deleteStudent } from '../../services/student/students-api'
+import { GetStudentResponse } from '../../shares/mooc'
 
 const StudentPage: NextPage = () => {
   const [courses, setCourses] = useState<Student[]>([])
@@ -15,18 +16,18 @@ const StudentPage: NextPage = () => {
 
   const getlistStudents = async (idToken: string) => {
     setIsLoading(true)
-    const students = await getStudents(idToken)
-    setCourses(students)
+    // const students = await getStudents(idToken)
+    setCourses(GetStudentResponse.items)
     setIsLoading(false)
   }
 
   const deleteCourse = async (studentId: string) => {
     await deleteStudent(token, studentId)
+    getlistStudents(token)
   }
 
   useEffect(() => {
     const idToken = localStorage.getItem('token')
-
     setToken(idToken?.toString() || '')
     if (idToken) {
       getlistStudents(idToken.toString())

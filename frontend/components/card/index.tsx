@@ -1,40 +1,12 @@
 import { Styles } from './styles'
-import { Course, CreateCourseRequest } from '../../shares/types'
-import { Button } from '../button'
-import { useRouter } from 'next/router'
-import { calculateDueDate } from '../../shares/utils'
-
-type CardType = {
-  item: Course
-  login: () => void
-  handleJoinCourse: (idToken: string, newStudent: CreateCourseRequest) => void
-}
+import { Button } from '../atoms/button'
+import { CardType } from './types'
+import { useCard } from './useCard'
 
 const { Container, Header, Typo, Description, Video, ButtonContainer } = Styles
 
 export const Card = (props: CardType) => {
-  const router = useRouter()
-  const { item, login, handleJoinCourse } = props
-  const { title, videoUrl } = item
-
-  const handleJoin = () => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      handleJoinCourse(token, {
-        name: title,
-        videoUrl: videoUrl,
-        dueDate: calculateDueDate()
-      })
-      router.push({
-        pathname: '/student',
-        query: { videoUrl: videoUrl, title: title }
-      })
-      console.log('tam')
-    } else {
-      login()
-    }
-  }
-
+  const { handleJoin, title, videoUrl, item } = useCard(props)
   return (
     <Container>
       <Video width="200" controls src={videoUrl + '.mp4'} height="140" />

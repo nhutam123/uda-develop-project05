@@ -1,67 +1,54 @@
-import { FC, useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { Student } from '../../../shares/types'
-import { Button } from '../../button'
-import { useRouter } from 'next/router'
+import { FC, Fragment } from 'react'
+import { Button } from '../../atoms/button'
 import { Loading } from '../../atoms/loading'
+import { Styles } from './styles'
+import { useStudent } from './useStudent'
+import { StudentProps } from './types'
+import { Colors } from '../../../shares/const/colors'
 
-type StudentProps = {
-  title: string
-  videoUrl: string
-  courses: Student[]
-  isLoading: boolean
-  handleDelete: (studentId: string) => void
-}
+const {
+  ButtonContainer,
+  Container,
+  CourseContainer,
+  Header,
+  ListCourseContainer,
+  Title,
+  TimeContainer,
+  Video
+} = Styles
 
+const { YELLOW, RED, WHITE } = Colors
 export const StudentTemplate: FC<StudentProps> = (props) => {
-  const [url, setUrl] = useState('')
-  const [courseTitle, setCourseTitle] = useState('')
-  const { courses, handleDelete, isLoading } = props
-  const router = useRouter()
-
-  const { title, videoUrl } = router.query
-
-  const deleteItem = async (studentId: string) => {
-    await handleDelete(studentId)
-    router.reload()
-  }
-
-  const handleClick = (course: Student) => {
-    console.log('tam')
-    router.push({
-      pathname: '/student',
-      query: { videoUrl: course.videoUrl, title: course.name }
-    })
-  }
-  console.log(courses)
-  useEffect(() => {
-    if (!videoUrl && !title) {
-      setUrl(courses[0]?.videoUrl || '')
-      setCourseTitle(courses[0]?.name || '')
-    }
-  }, [courses.length, videoUrl])
+  const {
+    courseTitle,
+    courses,
+    deleteItem,
+    handleClick,
+    isLoading,
+    url,
+    title,
+    videoUrl
+  } = useStudent(props)
 
   return (
     <Container>
       {isLoading ? (
         <Loading />
       ) : (
-        <>
-          <>
-            {courses.length ? (
-              <>
-                <Header>{title || courseTitle}</Header>
-                <Video
-                  width="200"
-                  controls
-                  src={(videoUrl || url) + '.mp4'}
-                  height="140"
-                />
-              </>
-            ) : (
-              <Header>No lessons registered yet</Header>
-            )}
-          </>
+        <Fragment>
+          {courses.length ? (
+            <div>
+              <Header>{title || courseTitle}</Header>
+              <Video
+                width="200"
+                controls
+                src={(videoUrl || url) + '.mp4'}
+                height="140"
+              />
+            </div>
+          ) : (
+            <Header>No lessons registered yet</Header>
+          )}
           <ListCourseContainer>
             {courses.map((course) => (
               <CourseContainer key={course.studentId}>
@@ -75,69 +62,23 @@ export const StudentTemplate: FC<StudentProps> = (props) => {
                   <Button
                     onClick={() => handleClick(course)}
                     text="Learn"
-                    backgroundColor="blue"
-                    color="#fff"
+                    backgroundColor={YELLOW}
+                    color={WHITE}
+                    borderColor={YELLOW}
                   />
                   <Button
-                    backgroundColor="red"
-                    color="white"
+                    backgroundColor={RED}
+                    color={WHITE}
                     text="delete"
-                    onClick={() => deleteItem(course.studentId)}
+                    onClick={() => deleteItem(course)}
+                    borderColor={RED}
                   />
                 </ButtonContainer>
               </CourseContainer>
             ))}
           </ListCourseContainer>
-        </>
+        </Fragment>
       )}
     </Container>
   )
 }
-
-const TimeContainer = styled.div`
-  display: flex;
-  gap: 20px;
-`
-
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-right: 20px;
-`
-
-const ListCourseContainer = styled.div`
-  display: flex;
-  gap: 24px;
-  flex-direction: column;
-  margin-top: 24px;
-`
-
-const CourseContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding-left: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-`
-
-const Container = styled.div`
-  width: 800px;
-  margin-bottom: 40px;
-`
-
-const Video = styled.video`
-  width: 800px;
-  height: 500px;
-  border-radius: 8px;
-`
-
-const Header = styled.h1`
-  color: red;
-`
-const Title = styled.h3`
-  color: red;
-`
