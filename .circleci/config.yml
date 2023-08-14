@@ -113,13 +113,6 @@ jobs:
               --stack-name "tamln2-frontend-${CIRCLE_WORKFLOW_ID:0:5}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:5}" \
               --tags project=tamln2-frontend-${CIRCLE_WORKFLOW_ID:0:5}
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .circleci/ansible/inventory
-      - destroy_environment:
-          id: ${CIRCLE_WORKFLOW_ID:0:5}
-          when: on_fail
 
   deploy-frontend:
     executor: node
@@ -178,7 +171,7 @@ jobs:
               --template-file cloudfront.yml \
               --stack-name udapeople-cloudfront-production \
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:5}" \
-              --tags project=udapeople
+              --tags project=tamln2-frontend
       - revert_migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:5}
           when: on_fail
