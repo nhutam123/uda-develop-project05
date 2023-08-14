@@ -33,7 +33,7 @@ Resources:
   WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
-      Bucket: !Ref AttachmentsBucket
+      Bucket: !Ref WebsiteBucket
       PolicyDocument:
         Id: MyPolicy
         Version: "2012-10-17"
