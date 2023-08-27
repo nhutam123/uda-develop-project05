@@ -4,6 +4,9 @@ import { Colors } from '../../../../shares/const/colors'
 const { WHITE } = Colors
 
 const Container = styled.div`
+  @media (max-width: 739px) {
+    display: none;
+  }
   height: 100vh;
   width: 250px;
   background-color: ${WHITE};

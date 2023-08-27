@@ -16,8 +16,8 @@ const StudentPage: NextPage = () => {
 
   const getlistStudents = async (idToken: string) => {
     setIsLoading(true)
-    // const students = await getStudents(idToken)
-    setCourses(GetStudentResponse.items)
+    const students = await getStudents(idToken)
+    setCourses(students)
     setIsLoading(false)
   }
 

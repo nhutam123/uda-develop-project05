@@ -24,15 +24,15 @@ const Home: NextPage = () => {
   }
   const getCourse = async () => {
     setIsLoading(true)
-    // if (!type) {
-    //   const { data } = await apiClient('tam').get('/courses')
-    //   setCourse(data)
-    // } else {
-    //   console.log('Tam dep trai')
-    //   const { data } = await apiClient('tam').get(`/courses/${type}`)
-    //   setCourse(data)
-    // }
-    setCourse(getResponse)
+    if (!type) {
+      const { data } = await apiClient('tam').get('/courses')
+      setCourse(data)
+    } else {
+      console.log('Tam dep trai')
+      const { data } = await apiClient('tam').get(`/courses/${type}`)
+      setCourse(data)
+    }
+    // setCourse(getResponse)
     setIsLoading(false)
   }
 

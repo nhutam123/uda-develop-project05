@@ -1,16 +1,17 @@
-import { ReactElement } from "react";
-import { Sidebar } from "./sidebar";
-import { Header } from "./header";
-import { Styles } from "./styles";
+import { ReactElement } from 'react'
+import { Sidebar } from './sidebar'
+import { Header } from './header'
+import { Styles } from './styles'
+import { Footer } from './footer'
 
-const { Container, Wrapper, Content, SidebarContainer } = Styles;
+const { Container, Wrapper, Content, SidebarContainer } = Styles
 
 type LayoutProps = {
-  children: ReactElement;
-};
+  children: ReactElement
+}
 
 export const Layout = (props: LayoutProps) => {
-  const { children } = props;
+  const { children } = props
   return (
     <Wrapper>
       <Header />
@@ -20,6 +21,7 @@ export const Layout = (props: LayoutProps) => {
         </SidebarContainer>
         <Content>{children}</Content>
       </Container>
+      <Footer />
     </Wrapper>
-  );
-};
+  )
+}

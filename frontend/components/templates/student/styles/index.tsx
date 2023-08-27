@@ -29,6 +29,9 @@ const CourseContainer = styled.div`
 const Container = styled.div`
   width: 800px;
   margin-bottom: 40px;
+  @media (max-width: 739px) {
+    width: 100%;
+  }
 `
 const Video = styled.video`
   width: 800px;

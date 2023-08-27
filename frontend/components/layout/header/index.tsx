@@ -20,10 +20,6 @@ export const Header = () => {
     const token = localStorage.getItem('token')
     const user = localStorage.getItem('user')
 
-    console.log('token', token)
-    console.log('isLoggedIn', isLogged)
-    console.log('user', user)
-
     setIsLoggedIn(!!isLogged)
   }, [session])
 
@@ -38,14 +34,14 @@ export const Header = () => {
           <Button
             text="Logout"
             backgroundColor={RED}
-            color="#FFFFFF"
+            color={WHITE}
             borderColor={RED}
             onClick={logout}
           />
           <Button
             text="MyPage"
             backgroundColor={GREEN}
-            color="#FFFFFF"
+            color={WHITE}
             borderColor={GREEN}
             onClick={() => {
               router.push('/student')
@@ -56,7 +52,7 @@ export const Header = () => {
         <Button
           text="Login"
           backgroundColor={GREEN}
-          color="#FFFFFF"
+          color={WHITE}
           borderColor={GREEN}
           onClick={login}
         />
@@ -66,6 +62,9 @@ export const Header = () => {
 }
 
 const ButtonContainer = styled.div`
+  @media (max-width: 739px) {
+    display: none;
+  }
   display: flex;
   gap: 20px;
 `

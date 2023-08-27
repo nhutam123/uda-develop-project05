@@ -10,6 +10,10 @@ const Container = styled.div`
   padding: 10px;
   background-color: white;
   height: 400px;
+  @media (max-width: 739px) {
+    width: 100%;
+    height: auto;
+  }
 `
 
 const Header = styled.div`
@@ -35,6 +39,10 @@ const Description = styled.div`
 const Video = styled.video`
   width: 230px;
   border-radius: 8px;
+  @media (max-width: 739px) {
+    width: 100%;
+    height: auto;
+  }
 `
 
 export const Styles = {
