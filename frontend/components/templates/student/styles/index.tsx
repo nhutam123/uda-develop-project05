@@ -25,6 +25,10 @@ const CourseContainer = styled.div`
   border-radius: 10px;
   padding-left: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  @media (max-width: 739px) {
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
 `
 const Container = styled.div`
   width: 800px;
@@ -34,9 +38,15 @@ const Container = styled.div`
   }
 `
 const Video = styled.video`
-  width: 800px;
-  height: 500px;
+  @media (min-width: 738px) {
+    width: 800px;
+    height: 500px;
+  }
   border-radius: 8px;
+  @media (max-width: 739px) {
+    width: 100%;
+    height: auto;
+  }
 `
 const Header = styled.h1`
   color: red;

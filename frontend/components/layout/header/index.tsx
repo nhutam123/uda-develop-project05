@@ -62,9 +62,9 @@ export const Header = () => {
 }
 
 const ButtonContainer = styled.div`
-  @media (max-width: 739px) {
+  /* @media (max-width: 739px) {
     display: none;
-  }
+  } */
   display: flex;
   gap: 20px;
 `

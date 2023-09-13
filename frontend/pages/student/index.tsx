@@ -6,7 +6,11 @@ import { Student } from '../../shares/types'
 import { getStudents, deleteStudent } from '../../services/student/students-api'
 import { GetStudentResponse } from '../../shares/mooc'
 
-const StudentPage: NextPage = () => {
+type StudentPageProps = {
+  items: []
+}
+
+const StudentPage: NextPage<StudentPageProps> = (props) => {
   const [courses, setCourses] = useState<Student[]>([])
   const [token, setToken] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -39,12 +43,18 @@ const StudentPage: NextPage = () => {
       {...{
         title: title?.toString() || '',
         videoUrl: videoUrl?.toString() || '',
-        courses: courses,
+        courses: props.items,
         handleDelete: deleteCourse,
         isLoading: isLoading
       }}
     />
   )
+}
+
+export const getServerSideProps = () => {
+  return {
+    props: GetStudentResponse
+  }
 }
 
 export default StudentPage

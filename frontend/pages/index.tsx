@@ -9,7 +9,11 @@ import { CreateCourseRequest } from '../shares/types'
 import { useRouter } from 'next/router'
 import { getResponse } from '../shares/mooc'
 
-const Home: NextPage = () => {
+type HomePageProps = {
+  items: []
+}
+
+const Home: NextPage<HomePageProps> = (props) => {
   const [course, setCourse] = useState<CourseData>()
   const [isLoading, setIsLoading] = useState(false)
   const { login } = useAuth()
@@ -36,19 +40,27 @@ const Home: NextPage = () => {
     setIsLoading(false)
   }
 
-  useEffect(() => {
-    getCourse()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type])
+  // useEffect(() => {
+  //   getCourse()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [type])
 
   return (
     <HomeTemplate
-      items={course?.items || []}
+      items={props?.items || []}
       login={login}
       handleJoinCourse={handleJoinCourse}
       isLoading={isLoading}
     />
   )
+}
+
+export const getServerSideProps = () => {
+  console.log('tam dep trai')
+
+  return {
+    props: getResponse
+  }
 }
 
 export default Home
