@@ -3,6 +3,7 @@ import { Card } from '../../card'
 import { Course, CreateCourseRequest } from '../../../shares/types'
 import { FC, Fragment } from 'react'
 import { Loading } from '../../atoms/loading'
+import { Banner } from '../../layout/banner'
 
 type HomeProps = {
   items: Course[]
@@ -15,7 +16,8 @@ export const HomeTemplate: FC<HomeProps> = (props) => {
   const { items, login, handleJoinCourse, isLoading } = props
 
   return (
-    <Fragment>
+    <Root>
+      <Banner />
       {isLoading ? (
         <Loading />
       ) : (
@@ -32,7 +34,7 @@ export const HomeTemplate: FC<HomeProps> = (props) => {
           ))}
         </Container>
       )}
-    </Fragment>
+    </Root>
   )
 }
 
@@ -42,4 +44,10 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 30px 40px;
+`
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `

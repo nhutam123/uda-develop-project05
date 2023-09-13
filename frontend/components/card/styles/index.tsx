@@ -10,6 +10,11 @@ const Container = styled.div`
   padding: 10px;
   background-color: white;
   height: 400px;
+  transition: transform 0.5s;
+  :hover {
+    transform: scale(1.06);
+    cursor: pointer;
+  }
   @media (max-width: 739px) {
     width: 100%;
     height: auto;
