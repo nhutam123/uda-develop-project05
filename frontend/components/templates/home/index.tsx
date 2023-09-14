@@ -17,7 +17,6 @@ export const HomeTemplate: FC<HomeProps> = (props) => {
 
   return (
     <Root>
-      <Banner />
       {isLoading ? (
         <Loading />
       ) : (
@@ -42,6 +41,7 @@ const Container = styled.div`
   padding-top: 20px;
   width: 100%;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 30px 40px;
 `

@@ -1,24 +1,22 @@
 import { ReactNode } from 'react'
-import { Sidebar } from './sidebar'
-import { Header } from './header'
+import { Header } from '../header'
 import { Styles } from './styles'
-import { Footer } from './footer'
+import { Footer } from '../footer'
+import { Banner } from '../banner'
 
-const { Container, Wrapper, Content, SidebarContainer } = Styles
+const { Container, Wrapper, Content } = Styles
 
 type LayoutProps = {
   children: ReactNode
 }
 
-export const Layout = (props: LayoutProps) => {
+export const DefaultLayout = (props: LayoutProps) => {
   const { children } = props
   return (
     <Wrapper>
       <Header />
       <Container>
-        <SidebarContainer>
-          <Sidebar />
-        </SidebarContainer>
+        <Banner />
         <Content>{children}</Content>
       </Container>
       <Footer />

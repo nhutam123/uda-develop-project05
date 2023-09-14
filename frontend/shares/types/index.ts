@@ -1,3 +1,6 @@
+import { ReactNode, ReactElement } from 'react'
+import type { AppProps } from 'next/app'
+import { NextPage } from 'next'
 export type Course = {
   videoUrl: string
   typeId: string
@@ -26,4 +29,12 @@ export type Student = {
   dueDate: string
   isGraduated: boolean
   videoUrl?: string
+}
+
+export type NextPageWithLayout<PageProps> = NextPage<PageProps> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+export type NextPagePropsWithLayout<PageProps> = AppProps & {
+  Component: NextPageWithLayout<PageProps>
 }

@@ -1,12 +1,13 @@
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { Layout } from '../components/layout'
+import type { NextPagePropsWithLayout } from '../shares/types'
+import { Fragment, ReactNode } from 'react'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <Layout>
+function MyApp({ Component, pageProps }: NextPagePropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
+  return getLayout(
+    <Fragment>
       <Component {...pageProps} />
-    </Layout>
+    </Fragment>
   )
 }
 

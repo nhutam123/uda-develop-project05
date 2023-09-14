@@ -1,16 +1,17 @@
-import { NextPage } from 'next'
+import type { ReactNode } from 'react'
 import { StudentTemplate } from '../../components/templates/student'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Student } from '../../shares/types'
+import { NextPageWithLayout, Student } from '../../shares/types'
 import { getStudents, deleteStudent } from '../../services/student/students-api'
 import { GetStudentResponse } from '../../shares/mooc'
+import { Layout } from '../../components/layout'
 
 type StudentPageProps = {
   items: []
 }
 
-const StudentPage: NextPage<StudentPageProps> = (props) => {
+const StudentPage: NextPageWithLayout<StudentPageProps> = (props) => {
   const [courses, setCourses] = useState<Student[]>([])
   const [token, setToken] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -56,5 +57,7 @@ export const getServerSideProps = () => {
     props: GetStudentResponse
   }
 }
+
+StudentPage.getLayout = (page: ReactNode) => <Layout>{page}</Layout>
 
 export default StudentPage

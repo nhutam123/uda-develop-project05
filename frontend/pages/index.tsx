@@ -1,19 +1,20 @@
-import type { NextPage } from 'next'
+import type { ReactNode } from 'react'
 import { apiClient } from '../shares/apiClient'
 import { useEffect, useState } from 'react'
-import { CourseData } from '../shares/types'
+import { CourseData, NextPageWithLayout } from '../shares/types'
 import { HomeTemplate } from '../components/templates/home'
 import { useAuth } from '../services/authen'
 import { createStudent } from '../services/student/students-api'
 import { CreateCourseRequest } from '../shares/types'
 import { useRouter } from 'next/router'
 import { getResponse } from '../shares/mooc'
+import { DefaultLayout } from '../components/layout/defaultLayout'
 
 type HomePageProps = {
   items: []
 }
 
-const Home: NextPage<HomePageProps> = (props) => {
+const Home: NextPageWithLayout<HomePageProps> = (props) => {
   const [course, setCourse] = useState<CourseData>()
   const [isLoading, setIsLoading] = useState(false)
   const { login } = useAuth()
@@ -64,3 +65,5 @@ export const getServerSideProps = () => {
 }
 
 export default Home
+
+Home.getLayout = (page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>
