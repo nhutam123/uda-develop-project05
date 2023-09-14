@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import { Card } from '../../card'
 import { Course, CreateCourseRequest } from '../../../shares/types'
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 import { Loading } from '../../atoms/loading'
-import { Banner } from '../../layout/banner'
 
 type HomeProps = {
   items: Course[]

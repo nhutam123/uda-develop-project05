@@ -62,7 +62,9 @@ export const Banner = () => {
           Learn Java for the feature
         </Slide4>
         <Slide className="keen-slider__slide number-slide5">5</Slide>
-        <Slide className="keen-slider__slide number-slide6">6</Slide>
+        <Slide6 className="keen-slider__slide number-slide6">
+          Learn Python for the feature
+        </Slide6>
       </BannerContainer>
     </Root>
   )
@@ -73,6 +75,7 @@ const BannerContainer = styled.div``
 const Root = styled.div`
   width: 1000px;
   height: 200px;
+  margin-bottom: 20px;
 `
 
 const Slide = styled.div`
@@ -145,6 +148,25 @@ const Slide4 = styled.div`
     128deg,
     rgba(182, 255, 64, 1) 0%,
     rgba(63, 255, 71, 1) 100%
+  );
+  color: white;
+`
+
+const Slide6 = styled.div`
+  :hover {
+    cursor: pointer;
+  }
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 300px;
+  background: rgb(64, 76, 255);
+  background: linear-gradient(
+    128deg,
+    rgba(64, 76, 255, 1) 0%,
+    rgba(174, 63, 255, 1) 100%
   );
   color: white;
 `
