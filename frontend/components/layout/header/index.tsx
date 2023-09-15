@@ -26,7 +26,7 @@ export const Header = () => {
   return (
     <Container>
       <Link href="/">
-        <Logo>Tamln2-Class</Logo>
+        <Logo>DREAM HOUSE</Logo>
       </Link>
       <Search placeholder="What do you want to learn today" />
       {isLoggedIn ? (

@@ -44,7 +44,7 @@ const StudentPage: NextPageWithLayout<StudentPageProps> = (props) => {
       {...{
         title: title?.toString() || '',
         videoUrl: videoUrl?.toString() || '',
-        courses: props.items,
+        courses: courses,
         handleDelete: deleteCourse,
         isLoading: isLoading
       }}
@@ -52,11 +52,11 @@ const StudentPage: NextPageWithLayout<StudentPageProps> = (props) => {
   )
 }
 
-export const getServerSideProps = () => {
-  return {
-    props: GetStudentResponse
-  }
-}
+// export const getServerSideProps = () => {
+//   return {
+//     props: GetStudentResponse
+//   }
+// }
 
 StudentPage.getLayout = (page: ReactNode) => <Layout>{page}</Layout>
 

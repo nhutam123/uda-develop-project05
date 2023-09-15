@@ -37,18 +37,18 @@ const Home: NextPageWithLayout<HomePageProps> = (props) => {
       const { data } = await apiClient('tam').get(`/courses/${type}`)
       setCourse(data)
     }
-    // setCourse(getResponse)
+    setCourse(getResponse)
     setIsLoading(false)
   }
 
-  // useEffect(() => {
-  //   getCourse()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [type])
+  useEffect(() => {
+    getCourse()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type])
 
   return (
     <HomeTemplate
-      items={props?.items || []}
+      items={course?.items || []}
       login={login}
       handleJoinCourse={handleJoinCourse}
       isLoading={isLoading}
@@ -56,13 +56,13 @@ const Home: NextPageWithLayout<HomePageProps> = (props) => {
   )
 }
 
-export const getServerSideProps = () => {
-  console.log('tam dep trai')
+// export const getServerSideProps = () => {
+//   console.log('tam dep trai')
 
-  return {
-    props: getResponse
-  }
-}
+//   return {
+//     props: getResponse
+//   }
+// }
 
 export default Home
 
