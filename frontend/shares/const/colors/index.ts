@@ -4,6 +4,7 @@ const WHITE = '#FFFF'
 const GREEN = '#04AA6D'
 const BLUE = 'blue'
 const Main = '#3b82f680'
+const Blur = '#04AA6D'
 
 export const Colors = {
   RED,
@@ -11,5 +12,6 @@ export const Colors = {
   WHITE,
   GREEN,
   BLUE,
-  Main
+  Main,
+  Blur
 }

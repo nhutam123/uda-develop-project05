@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Colors } from '../../../shares/const/colors'
 import { Fragment, useEffect, useRef, useState } from 'react'
-const { Main, WHITE } = Colors
+const { Main, WHITE, Blur } = Colors
 
 export const Footer = () => {
   const scrollToTop = useRef<HTMLButtonElement>(null)
@@ -53,7 +53,7 @@ const Container = styled.div`
 `
 
 const ButtonScrollToTop = styled.button`
-  background: rgb(122, 200, 0);
+  background: ${Blur};
   outline: none;
   border: none;
   color: ${WHITE};
