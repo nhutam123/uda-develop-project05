@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { MediaQuery } from '../../../../shares/const/mediaQuery'
 
 const Container = styled.div`
   height: 80px;
@@ -7,7 +8,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     flex-direction: column;
     height: auto;
   }

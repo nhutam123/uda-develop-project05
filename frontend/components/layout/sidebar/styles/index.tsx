@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 import { Colors } from '../../../../shares/const/colors'
+import { MediaQuery } from '../../../../shares/const/mediaQuery'
 
 const { WHITE } = Colors
 
 const Container = styled.div`
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     display: none;
   }
   height: 100vh;

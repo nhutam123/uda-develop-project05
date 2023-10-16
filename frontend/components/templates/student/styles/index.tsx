@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { MediaQuery } from '../../../../shares/const/mediaQuery'
 
 const TimeContainer = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const CourseContainer = styled.div`
   border-radius: 10px;
   padding-left: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     flex-wrap: wrap;
     margin-bottom: 20px;
   }
@@ -33,17 +34,17 @@ const CourseContainer = styled.div`
 const Container = styled.div`
   width: 800px;
   margin-bottom: 40px;
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     width: 100%;
   }
 `
 const Video = styled.video`
-  @media (min-width: 738px) {
+  ${MediaQuery.PC_SCREEN} {
     width: 800px;
     height: 500px;
   }
   border-radius: 8px;
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     width: 100%;
     height: auto;
   }

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { MediaQuery } from '../../../../shares/const/mediaQuery'
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,10 +15,10 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     width: 100vw;
   }
-  @media (min-width: 738px) {
+  ${MediaQuery.PC_SCREEN} {
     margin: 20px 0;
   }
 `
@@ -25,7 +26,12 @@ const Container = styled.div`
 const Content = styled.div`
   background-color: white;
   border-radius: 8px;
-  width: 900px;
+  ${MediaQuery.MOBILE_SCREEN} {
+    width: 100vw;
+  }
+  ${MediaQuery.PC_SCREEN} {
+    width: 900px;
+  }
   display: flex;
   justify-content: center;
   padding: 20px 0;

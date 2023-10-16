@@ -3,6 +3,7 @@ import { Card } from '../../card'
 import { Course, CreateCourseRequest } from '../../../shares/types'
 import { FC } from 'react'
 import { Loading } from '../../atoms/loading'
+import { MediaQuery } from '../../../shares/const/mediaQuery'
 
 type HomeProps = {
   items: Course[]
@@ -48,5 +49,11 @@ const Container = styled.div`
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+
+  ${MediaQuery.MOBILE_SCREEN} {
+    width: 90%;
+  }
+  ${MediaQuery.PC_SCREEN} {
+    width: 100%;
+  }
 `

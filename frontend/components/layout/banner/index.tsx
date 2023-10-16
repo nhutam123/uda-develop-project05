@@ -3,6 +3,7 @@ import 'keen-slider/keen-slider.min.css'
 import styled from 'styled-components'
 import { Images } from '../../../shares/images'
 import { banners } from '../../../shares/mooc/banner'
+import { MediaQuery } from '../../../shares/const/mediaQuery'
 
 const { BannerImage } = Images
 
@@ -75,8 +76,15 @@ export const Banner = () => {
 const BannerContainer = styled.div``
 
 const Root = styled.div`
-  width: 1000px;
-  height: 300px;
+  ${MediaQuery.MOBILE_SCREEN} {
+    width: 100vw;
+    height: auto;
+  }
+  ${MediaQuery.PC_SCREEN} {
+    width: 1000px;
+    height: 300px;
+  }
+
   margin-bottom: 20px;
 `
 
@@ -87,9 +95,14 @@ const Slide1 = styled.div<{ image: string }>`
   font-size: 25px;
   display: flex;
   justify-content: end;
+  ${MediaQuery.MOBILE_SCREEN} {
+    height: 150px;
+  }
+  ${MediaQuery.PC_SCREEN} {
+    height: 300px;
+    width: 300px;
+  }
 
-  height: 300px;
-  width: 300px;
   background: linear-gradient(to right, transparent, #f5f8f5) no-repeat center,
     url(${(props) => props.image});
   background-size: cover;
@@ -99,6 +112,9 @@ const Slide1 = styled.div<{ image: string }>`
   position: relative;
 `
 const TextContainer = styled.div`
+  ${MediaQuery.MOBILE_SCREEN} {
+    display: none;
+  }
   position: absolute;
   right: 20px;
   top: 30px;

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { MediaQuery } from '../../../shares/const/mediaQuery'
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,10 +12,10 @@ const Wrapper = styled.div`
 const Container = styled.div`
   width: 80%;
   display: flex;
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     width: 100vw;
   }
-  @media (min-width: 738px) {
+  ${MediaQuery.PC_SCREEN} {
     margin: 20px 0;
   }
 `
@@ -23,14 +24,19 @@ const Content = styled.div`
   padding: 20px;
   background-color: white;
   border-radius: 8px;
-  width: 900px;
+  ${MediaQuery.MOBILE_SCREEN} {
+    width: 100vw;
+  }
+  ${MediaQuery.PC_SCREEN} {
+    width: 900px;
+  }
   display: flex;
   justify-content: center;
 `
 
 const SidebarContainer = styled.div`
   width: 300px;
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     display: none;
   }
 `

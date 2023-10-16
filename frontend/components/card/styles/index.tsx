@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { MediaQuery } from '../../../shares/const/mediaQuery'
 
 const Container = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ const Container = styled.div`
     transform: scale(1.06);
     cursor: pointer;
   }
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     width: 100%;
     height: auto;
   }
@@ -44,7 +45,7 @@ const Description = styled.div`
 const Video = styled.video`
   width: 230px;
   border-radius: 8px;
-  @media (max-width: 739px) {
+  ${MediaQuery.MOBILE_SCREEN} {
     width: 100%;
     height: auto;
   }
