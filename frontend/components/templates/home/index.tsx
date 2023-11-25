@@ -49,6 +49,7 @@ const Container = styled.div`
 const Root = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 100%;
 
   ${MediaQuery.MOBILE_SCREEN} {
     width: 90%;
