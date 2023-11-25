@@ -6,10 +6,10 @@ const logger = createLogger('Log from Students.ts')
 const uuidv4 = require('uuid/v4')
 const stockAccess = new StockAccess()
 
-// export async function getAllStudent(userId: string): Promise<Student[]> {
-//   logger.info(`Getting all Students for user: ${userId}`)
-//   return studentAccess.getAllStudent(userId)
-// }
+export async function getAllStocks(userId: string): Promise<Stock[]> {
+  logger.info(`Getting all Stocks for user: ${userId}`)
+  return stockAccess.getAllStocks(userId)
+}
 
 export function createStock(
   createStockRequest: Stock,

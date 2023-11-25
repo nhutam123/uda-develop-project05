@@ -51,8 +51,12 @@ custom:
         contentType: "application/json"
         schema:
           required:
-            - title
-            - dueDate
+            - stockName
+            - purchasePrice
+            - quantity
+            - profitTakingPrice
+            - stopLossPrice
+            - purchaseDay
           properties:
             stockName:
               minLength: 1
@@ -130,6 +134,27 @@ functions:
       - Effect: Allow
         Action:
           - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.STOCKS_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
+
+  # get courses
+  GetStocks:
+    handler: src/lambda/http/stocks/getStock.handler
+    events:
+      - http:
+          method: get
+          path: stocks
+          cors: true
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-get-stocks-role-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:GetItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.STOCKS_TABLE}
       - Effect: Allow
         Action:

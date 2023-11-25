@@ -57,7 +57,7 @@ export const Header = () => {
               color={WHITE}
               borderColor={GREEN}
               onClick={() => {
-                router.push('/student')
+                router.push('/stock')
               }}
             />
           </Fragment>

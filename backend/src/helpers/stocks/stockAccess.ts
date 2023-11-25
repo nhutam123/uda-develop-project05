@@ -14,28 +14,28 @@ export class StockAccess {
     private readonly stockTable = process.env.STOCKS_TABLE // private readonly s3BucketName = process.env.S3_BUCKET_NAME
   ) {}
 
-  // async getAllStudent(userId: string): Promise<Student[]> {
-  //   logger.info(
-  //     `Processing: Getting all Students of ${userId} from ${this.studentTable}`
-  //   )
-  //   const params = {
-  //     TableName: this.studentTable,
-  //     KeyConditionExpression: '#userId = :userId',
-  //     ExpressionAttributeNames: {
-  //       '#userId': 'userId'
-  //     },
-  //     ExpressionAttributeValues: {
-  //       ':userId': userId
-  //     }
-  //   }
-  //   const result = await this.docClient.query(params).promise()
-  //   const items = result.Items
-  //   logger.info(
-  //     `Processing: Get ${items.length} Students of ${userId} from ${this.studentTable}`
-  //   )
+  async getAllStocks(userId: string): Promise<Stock[]> {
+    logger.info(
+      `Processing: Getting all Stocks of ${userId} from ${this.stockTable}`
+    )
+    const params = {
+      TableName: this.stockTable,
+      KeyConditionExpression: '#userId = :userId',
+      ExpressionAttributeNames: {
+        '#userId': 'userId'
+      },
+      ExpressionAttributeValues: {
+        ':userId': userId
+      }
+    }
+    const result = await this.docClient.query(params).promise()
+    const items = result.Items
+    logger.info(
+      `Processing: Get ${items.length} Students of ${userId} from ${this.stockTable}`
+    )
 
-  //   return items as Student[]
-  // }
+    return items as Stock[]
+  }
 
   async createStock(stock: Stock): Promise<Stock> {
     logger.info(
