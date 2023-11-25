@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { MediaQuery } from '../../../../shares/const/mediaQuery'
+import { faFontAwesome } from '@fortawesome/free-solid-svg-icons'
 
 const Container = styled.div`
   height: 80px;
@@ -30,6 +31,9 @@ const Search = styled.input`
 `
 
 const Logo = styled.h1`
+  ${MediaQuery.MOBILE_SCREEN} {
+    font-size: 24px;
+  }
   color: darkviolet;
 `
 
@@ -50,10 +54,39 @@ const CartIcon = styled.img`
   color: white;
 `
 
+const ButtonContainer = styled.div`
+  ${MediaQuery.MOBILE_SCREEN} {
+    display: none;
+  }
+  display: flex;
+  gap: 20px;
+`
+
+const LogoContainer = styled.div`
+  ${MediaQuery.MOBILE_SCREEN} {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+`
+
+const IconContainer = styled.div`
+  ${MediaQuery.MOBILE_SCREEN} {
+    display: block;
+  }
+  ${MediaQuery.PC_SCREEN} {
+    display: none;
+  }
+`
+
 export const Styles = {
   Container,
   Search,
   Logo,
   ShoppingCart,
-  CartIcon
+  CartIcon,
+  LogoContainer,
+  ButtonContainer,
+  IconContainer
 }

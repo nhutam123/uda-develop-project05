@@ -3,12 +3,18 @@ import { Styles } from './styles'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../../services/authen'
 import { Fragment, useEffect, useState } from 'react'
-import styled from 'styled-components'
 import Link from 'next/link'
 import { Colors } from '../../../shares/const/colors'
-import { MediaQuery } from '../../../shares/const/mediaQuery'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const { Container, Search, Logo } = Styles
+const {
+  Container,
+  Search,
+  Logo,
+  ButtonContainer,
+  IconContainer,
+  LogoContainer
+} = Styles
 const { GREEN, RED, WHITE } = Colors
 
 export const Header = () => {
@@ -30,7 +36,9 @@ export const Header = () => {
         <Link href="/">
           <Logo>DREAM HOUSE</Logo>
         </Link>
-        <IconContainer></IconContainer>
+        <IconContainer>
+          <FontAwesomeIcon icon={['fab', 'bars']} />
+        </IconContainer>
       </LogoContainer>
       <Search placeholder="What do you want to learn today" />
       <ButtonContainer>
@@ -66,27 +74,3 @@ export const Header = () => {
     </Container>
   )
 }
-
-const ButtonContainer = styled.div`
-  ${MediaQuery.MOBILE_SCREEN} {
-    display: none;
-  }
-  display: flex;
-  gap: 20px;
-`
-
-const LogoContainer = styled.div`
-  ${MediaQuery.MOBILE_SCREEN} {
-    display: flex;
-    justify-content: space-between;
-  }
-`
-
-const IconContainer = styled.div`
-  ${MediaQuery.MOBILE_SCREEN} {
-    display: block;
-  }
-  ${MediaQuery.PC_SCREEN} {
-    display: none;
-  }
-`

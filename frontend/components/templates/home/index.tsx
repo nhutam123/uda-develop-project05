@@ -4,6 +4,7 @@ import { Course, CreateCourseRequest } from '../../../shares/types'
 import { FC } from 'react'
 import { Loading } from '../../atoms/loading'
 import { MediaQuery } from '../../../shares/const/mediaQuery'
+import Script from 'next/script'
 
 type HomeProps = {
   items: Course[]
@@ -31,6 +32,12 @@ export const HomeTemplate: FC<HomeProps> = (props) => {
               key={item.courseId}
             />
           ))}
+          <Script
+            src="https://www.vesselfinder.com/aismap.js"
+            // src="https://random.com/myScript.js"
+            strategy="afterInteractive"
+            defer={false}
+          />
         </Container>
       )}
     </Root>

@@ -22,6 +22,7 @@ provider:
   environment:
     UDACITY_PROJECT_NAME: tamln2-serveless-${self:provider.stage}
     STUDENTS_TABLE: tamln2-serverless-${self:provider.stage}
+    STOCKS_TABLE: tamln2-stocks-${self:provider.stage}
     S3_BUCKET_NAME: tamln2-serverless-${self:provider.stage}
     COURSES_TABLE: tamln2-courses-${self:provider.stage}
     S3_BUCKET_COURSES: tamln2-courses-${self:provider.stage}
@@ -45,6 +46,38 @@ custom:
               minLength: 1
               type: string
             dueDate:
+              type: string
+      - name: CreateStockRequest
+        contentType: "application/json"
+        schema:
+          required:
+            - title
+            - dueDate
+          properties:
+            stockName:
+              minLength: 1
+              type: string
+            purchasePrice:
+              type: number
+            sellPrice:
+              type: number
+            profitTakingPrice:
+              type: number
+            stopLossPrice:
+              type: number
+            quantity:
+              type: number
+            totalPrice:
+              type: number
+            purchaseDay:
+              type: string
+            sellDay:
+              type: string
+            isDiscipline:
+              type: boolean
+            description:
+              type: string
+            timing:
               type: string
       - name: CreateStudentRequest
         contentType: "application/json"
@@ -77,6 +110,32 @@ custom:
 functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
+  # Stocks
+  CreateStock:
+    handler: src/lambda/http/stocks/createStock.handler
+    events:
+      - http:
+          method: post
+          path: stocks
+          cors: true
+          authorizer: Auth
+          documentation:
+            summary: "Create a new stock item"
+            description: "Create a new stock item"
+            requestModels:
+              "application/json": CreateStockRequest
+          reqValidatorName: RequestBodyValidator
+    iamRoleStatementsName: ${self:provider.environment.UDACITY_PROJECT_NAME}-create-stock-role-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.STOCKS_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
 
   # get courses
   GetCourses:
@@ -295,6 +354,21 @@ resources:
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
         ValidateRequestParameters: false
+    StocksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: stockId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: stockId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.STOCKS_TABLE}
     CoursesTable:
       Type: AWS::DynamoDB::Table
       Properties:
