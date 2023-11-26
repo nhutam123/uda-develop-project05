@@ -25,17 +25,17 @@ export const Navbar = () => {
 
   return (
     <NavContainer>
-      <Nav isActive={active === 'java'}>
-        <NavLink onClick={() => handleClick('java')}>Java</NavLink>
+      <Nav isActive={active === 'Dài hạn'}>
+        <NavLink onClick={() => handleClick('java')}>Dài hạn</NavLink>
       </Nav>
       <Nav isActive={active === 'javascript'}>
-        <NavLink onClick={() => handleClick('javascript')}>Javascript</NavLink>
+        <NavLink onClick={() => handleClick('javascript')}>Ngắn han</NavLink>
       </Nav>
       <Nav isActive={active === 'python'}>
-        <NavLink onClick={() => handleClick('python')}>Python</NavLink>
+        <NavLink onClick={() => handleClick('python')}>Tích lũy</NavLink>
       </Nav>
       <Nav isActive={active === 'reactjs'}>
-        <NavLink onClick={() => handleClick('reactjs')}>Reactjs</NavLink>
+        <NavLink onClick={() => handleClick('reactjs')}>Thêm dao dịch</NavLink>
       </Nav>
     </NavContainer>
   )

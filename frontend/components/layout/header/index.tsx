@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Button } from '../../atoms/button'
 import { Styles } from './styles'
 import { useRouter } from 'next/router'
@@ -17,7 +18,12 @@ const {
 } = Styles
 const { GREEN, RED, WHITE } = Colors
 
-export const Header = () => {
+type HeaderProps = {
+  isSimpleLayout?: boolean
+}
+
+export const Header: FC<HeaderProps> = (props) => {
+  const { isSimpleLayout } = props
   const { login, logout, session } = useAuth()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const router = useRouter()
@@ -37,10 +43,13 @@ export const Header = () => {
           <Logo>DREAM HOUSE</Logo>
         </Link>
         <IconContainer>
-          <FontAwesomeIcon icon={['fab', 'bars']} />
+          {/* <FontAwesomeIcon icon={['fab', 'bars']} /> */}
         </IconContainer>
       </LogoContainer>
-      <Search placeholder="What do you want to learn today" />
+      <Search
+        isSimpleLayout={isSimpleLayout}
+        placeholder="What do you want to learn today"
+      />
       <ButtonContainer>
         {isLoggedIn ? (
           <Fragment>

@@ -15,13 +15,13 @@ export type Stock = {
 }
 
 export type CreateStockRequest = {
-  stockName: string
   purchasePrice: number
   sellPrice: number
   profitTakingPrice: number
   stopLossPrice: number
   quantity: number
   totalPrice: number
+  stockName: string
   purchaseDay: string
   sellDay: string
   isDiscipline: boolean

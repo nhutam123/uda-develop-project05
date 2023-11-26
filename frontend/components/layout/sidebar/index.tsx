@@ -1,13 +1,13 @@
-import { Styles } from "./styles";
-import { Navbar } from "../../navbar";
+import { Styles } from './styles'
+import { Navbar } from '../../navbar'
 
-const { Container, Header } = Styles;
+const { Container, Header } = Styles
 
 export const Sidebar = () => {
   return (
     <Container>
-      <Header>Danh Muc</Header>
+      <Header>Danh Mục</Header>
       <Navbar />
     </Container>
-  );
-};
+  )
+}

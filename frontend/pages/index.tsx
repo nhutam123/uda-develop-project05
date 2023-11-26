@@ -5,8 +5,8 @@ import { CourseData, NextPageWithLayout } from '../shares/types'
 import { useAuth } from '../services/authen'
 import { createStudent } from '../services/student/students-api'
 import { CreateCourseRequest } from '../shares/types'
-import { DefaultLayout } from '../components/layout/defaultLayout'
 import { HomeTemplate } from '../components/templates/home'
+import { Layout } from '../components/layout'
 
 type HomePageProps = {
   items: []
@@ -25,7 +25,7 @@ const Home: NextPageWithLayout<HomePageProps> = (props) => {
   }
   const getCourse = async () => {
     setIsLoading(true)
-    const { data } = await apiClient('').get('/courses')
+    const { data } = await apiClient().get('/courses')
     setCourse(data)
     setIsLoading(false)
   }
@@ -47,4 +47,4 @@ const Home: NextPageWithLayout<HomePageProps> = (props) => {
 
 export default Home
 
-Home.getLayout = (page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>
+Home.getLayout = (page: ReactNode) => <Layout>{page}</Layout>

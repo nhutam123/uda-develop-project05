@@ -9,12 +9,13 @@ export const authConfig = {
   callbackUrl: 'http://tamln.click/callback'
 }
 
-export const apiClient = (idToken: string): AxiosInstance => {
+export const apiClient = (): AxiosInstance => {
+  const token = localStorage.getItem('token')
   const axiosInstance = axios.create({
     baseURL: apiEndpoint,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${idToken}`
+      Authorization: `Bearer ${token}`
     }
   })
 

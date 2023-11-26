@@ -15,7 +15,7 @@ const Container = styled.div`
   }
 `
 
-const Search = styled.input`
+const Search = styled.input<{ isSimpleLayout?: boolean }>`
   height: 50px;
   width: 40%;
   border: 1px solid aliceblue;
@@ -28,6 +28,7 @@ const Search = styled.input`
     margin-bottom: 20px;
     width: 80%;
   }
+  display: ${(props) => (props.isSimpleLayout ? 'none' : 'block')};
 `
 
 const Logo = styled.h1`

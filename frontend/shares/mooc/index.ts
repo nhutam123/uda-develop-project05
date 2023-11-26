@@ -108,3 +108,40 @@ export const GetStudentResponse = {
     }
   ]
 }
+
+export const GetTrainsactionResponse = {
+  items: [
+    {
+      quantity: 1000,
+      sellDay: '26/11/2024',
+      totalPrice: 39000000,
+      purchasePrice: 39000,
+      purchaseDay: '26/11/2023',
+      sellPrice: 0,
+      isDiscipline: false,
+      userId: 'google-oauth2|102454349684857234097',
+      profitTakingPrice: 46800,
+      timing: '23',
+      stockId: '274ce60d-2252-4f63-8d85-ba0da3a89286',
+      stockName: 'mwg',
+      description: 'mua dai han',
+      stopLossPrice: 36270
+    },
+    {
+      quantity: 100,
+      sellDay: 'string',
+      totalPrice: 1000000,
+      purchasePrice: 10000,
+      purchaseDay: 'string',
+      sellPrice: 9300,
+      isDiscipline: true,
+      userId: 'google-oauth2|102454349684857234097',
+      profitTakingPrice: 12500,
+      timing: 'string',
+      stockId: '4532ecef-86b2-4e1f-9b62-7f464fc1641b',
+      stockName: 'HPG',
+      description: 'string',
+      stopLossPrice: 9300
+    }
+  ]
+}

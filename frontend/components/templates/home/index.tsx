@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Card } from '../../card'
 import { Course, CreateCourseRequest } from '../../../shares/types'
 import { FC } from 'react'
 import { Loading } from '../../atoms/loading'
@@ -15,26 +14,7 @@ type HomeProps = {
 export const HomeTemplate: FC<HomeProps> = (props) => {
   const { items, login, handleJoinCourse, isLoading } = props
 
-  return (
-    <Root>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <Container>
-          {items.map((item) => (
-            <Card
-              {...{
-                item: item,
-                login: login,
-                handleJoinCourse: handleJoinCourse
-              }}
-              key={item.courseId}
-            />
-          ))}
-        </Container>
-      )}
-    </Root>
-  )
+  return <Root>{isLoading ? <Loading /> : <Container></Container>}</Root>
 }
 
 const Container = styled.div`
